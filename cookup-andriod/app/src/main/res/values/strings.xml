@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CookUp</string>
+    <string name="tagline">Nấu ngon mỗi ngày</string>
+
+    <!-- Auth -->
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="no_account">Chưa có tài khoản? </string>
+    <string name="have_account">Đã có tài khoản? </string>
+    <string name="register_now">Đăng ký ngay</string>
+    <string name="login_now">Đăng nhập</string>
+</resources>

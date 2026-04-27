@@ -1,0 +1,3 @@
+Image 1 (chiikawa tròn + thìa)  → AI floating button + empty state
+Image 2 (logo tô cam)           → App icon + Splash + Navbar center
+Image 3 (chef cầm tô ramen)     → Onboarding illustration
