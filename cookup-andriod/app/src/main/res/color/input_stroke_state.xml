@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Khi đang focus (đang gõ) → viền cam -->
+    <item android:color="@color/orange_primary" android:state_focused="true"/>
+    <!-- Khi lỗi → viền đỏ -->
+    <item android:color="@color/error" android:state_activated="true"/>
+    <!-- Bình thường → viền xám -->
+    <item android:color="@color/border"/>
+</selector>
