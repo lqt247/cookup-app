@@ -27,21 +27,12 @@
 
         <!-- MainActivity không còn là màn đầu nữa -->
         <activity android:name=".MainActivity"/>
-<!--        &lt;!&ndash; Màn hình đầu tiên khi mở app &ndash;&gt;-->
-<!--        <activity-->
-<!--            android:name=".activity.SplashActivity"-->
-<!--            android:exported="true"-->
-<!--            android:screenOrientation="portrait">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
 
-<!--        &lt;!&ndash; Các màn hình Auth &ndash;&gt;-->
-<!--        <activity-->
-<!--            android:name=".activity.LoginActivity"-->
-<!--            android:screenOrientation="portrait"/>-->
+
+        <!-- Các màn hình Auth -->
+        <activity
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"/>
 <!--        <activity-->
 <!--            android:name=".activity.RegisterActivity"-->
 <!--            android:screenOrientation="portrait"/>-->
