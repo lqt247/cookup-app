@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ===== DARK THEME (mặc định) ===== -->
+    <style name="Theme.Cookupapp.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/orange_primary</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        <item name="android:windowBackground">@color/bg_primary</item>
+        <item name="colorSurface">@color/bg_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:colorBackground">@color/bg_primary</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorSecondary">@color/orange_light</item>
+        <item name="android:statusBarColor">@color/bg_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="materialButtonStyle">@style/Widget.Cookup.Button</item>
+        <item name="textInputStyle">@style/Widget.Cookup.TextInput.Dark</item>
+    </style>
+
+    <!-- ===== LIGHT THEME ===== -->
+    <style name="Theme.Cookupapp.Light" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/orange_primary</item>
+        <item name="colorPrimaryVariant">@color/orange_dark</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:windowBackground">#F5F5F5</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#1A1A1A</item>
+        <item name="android:colorBackground">#F5F5F5</item>
+        <item name="colorOnBackground">#1A1A1A</item>
+        <item name="colorSecondary">@color/orange_light</item>
+        <item name="android:statusBarColor">@color/orange_primary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:textColorPrimary">#1A1A1A</item>
+        <item name="android:textColorSecondary">#666666</item>
+        <item name="materialButtonStyle">@style/Widget.Cookup.Button</item>
+        <item name="textInputStyle">@style/Widget.Cookup.TextInput.Light</item>
+    </style>
+
+    <!-- Button cam (dùng cho cả 2 theme) -->
+    <style name="Widget.Cookup.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/orange_primary</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- TextInput Dark -->
+    <style name="Widget.Cookup.TextInput.Dark" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">#242424</item>
+        <item name="boxStrokeColor">@color/orange_primary</item>
+        <item name="hintTextColor">@color/text_hint</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
+    <!-- TextInput Light -->
+    <style name="Widget.Cookup.TextInput.Light" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">#FFFFFF</item>
+        <item name="boxStrokeColor">@color/orange_primary</item>
+        <item name="hintTextColor">#999999</item>
+        <item name="android:textColorHint">#999999</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+    </style>
+
+</resources>
