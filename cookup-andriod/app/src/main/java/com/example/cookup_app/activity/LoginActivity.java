@@ -69,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Đăng ký
         tvRegister.setOnClickListener(v -> {
+
             startActivity(new Intent(this, RegisterActivity.class));
         });
 
@@ -140,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                ds.setUnderlineText(false); // đổi true nếu muốn gạch chân
+                ds.setUnderlineText(false);
             }
         }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 

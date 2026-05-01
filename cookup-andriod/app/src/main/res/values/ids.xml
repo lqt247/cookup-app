@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tvDecline" type="id" />
+    <item name="btnAgree" type="id" />
+    <item name="tvBackToLogin" type="id" />
+    <item name="btnSendOtp" type="id" />
+    <item name="imgIcon" type="id" />
+</resources>

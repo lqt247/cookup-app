@@ -26,24 +26,27 @@
         </activity>
 
         <!-- MainActivity không còn là màn đầu nữa -->
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity"
+
+
+
+            />
 
 
         <!-- Các màn hình Auth -->
         <activity
             android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".activity.ForgotPasswordActivity"
             android:screenOrientation="portrait"/>
-<!--        <activity-->
-<!--            android:name=".activity.RegisterActivity"-->
-<!--            android:screenOrientation="portrait"/>-->
-<!--        <activity-->
-<!--            android:name=".activity.ForgotPasswordActivity"-->
-<!--            android:screenOrientation="portrait"/>-->
 
-<!--        &lt;!&ndash; Màn hình chính sau khi đăng nhập &ndash;&gt;-->
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:screenOrientation="portrait"/>-->
+
 
     </application>
 
