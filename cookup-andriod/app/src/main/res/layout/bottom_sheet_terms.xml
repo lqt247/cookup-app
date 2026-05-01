@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bg_card"
+    android:padding="24dp">
+
+    <!-- Handle bar -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:background="@color/divider"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Điều khoản sử dụng"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Nội dung điều khoản -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Chấp nhận điều khoản\nBằng cách sử dụng CookUp, bạn đồng ý tuân theo các điều khoản này.
+            \n\n2. Tài khoản người dùng\nBạn chịu trách nhiệm bảo mật tài khoản và mật khẩu của mình.
+            \n\n3. Nội dung người dùng\nBạn có thể đăng công thức nấu ăn. Nội dung vi phạm sẽ bị xóa.
+            \n\n4. Quyền riêng tư\nChúng tôi bảo vệ thông tin cá nhân của bạn theo Chính sách bảo mật.
+            \n\n5. Sử dụng hợp lệ\nKhông sử dụng app cho mục đích bất hợp pháp hoặc gây hại.
+            \n\n6. Thay đổi điều khoản\nCookUp có thể cập nhật điều khoản này. Chúng tôi sẽ thông báo khi có thay đổi.
+            \n\n7. Liên hệ\nNếu có thắc mắc, liên hệ: support@cookup.vn"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:fontFamily="@font/poppins_regular"
+            android:lineSpacingMultiplier="1.6"/>
+
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+
+        android:id="@+id/btnAgree"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="Tôi đồng ý"
+        android:textColor="#FFFFFF"
+
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        app:backgroundTint="@color/orange_primary"
+        app:cornerRadius="12dp"
+        android:gravity="center"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"/>
+
+    <!-- Nút từ chối -->
+    <TextView
+        android:id="@+id/tvDecline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Không đồng ý"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center"
+        android:padding="12dp"
+        />
+
+</LinearLayout>
