@@ -24,14 +24,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <!-- MainActivity không còn là màn đầu nữa -->
         <activity android:name=".MainActivity"
 
 
 
             />
-
 
         <!-- Các màn hình Auth -->
         <activity
@@ -45,8 +43,9 @@
         <activity
             android:name=".activity.ForgotPasswordActivity"
             android:screenOrientation="portrait"/>
-
-
+        <activity
+            android:name=".activity.VerifyEmailActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

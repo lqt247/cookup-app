@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <!-- Scroll tránh vỡ layout màn nhỏ -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <!-- Icon -->
+            <ImageView
+                android:id="@+id/imgEmail"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="50dp"
+                android:src="@android:drawable/ic_dialog_email"
+                android:tint="@color/orange_primary"/>
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Xác thực Email"
+                android:textColor="@color/text_primary"
+                android:textSize="28sp"
+                android:fontFamily="@font/poppins_bold"/>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:text="Chúng tôi đã gửi email xác thực đến"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:textColor="@color/orange_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <!-- Guide -->
+            <TextView
+                android:id="@+id/tvGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="Vui lòng kiểm tra hộp thư Gmail và nhấn vào liên kết xác thực. Sau đó quay lại ứng dụng và nhấn nút bên dưới."
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <!-- Button verify -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVerified"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="36dp"
+                android:text="Tôi đã xác thực Email"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppins_semibold"
+                app:backgroundTint="@color/orange_primary"
+                app:cornerRadius="14dp"/>
+
+            <!-- Button resend -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResend"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="14dp"
+                android:text="Gửi lại email"
+                android:textAllCaps="false"
+                android:textColor="@color/orange_primary"
+                android:textSize="15sp"
+                android:fontFamily="@font/poppins_medium"
+                app:strokeColor="@color/orange_primary"
+                app:strokeWidth="1dp"
+                app:cornerRadius="14dp"
+                app:backgroundTint="@android:color/transparent"/>
+
+            <!-- Back -->
+            <TextView
+                android:id="@+id/tvBackToLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:padding="8dp"
+                android:text="Quay lại đăng nhập"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_medium"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
