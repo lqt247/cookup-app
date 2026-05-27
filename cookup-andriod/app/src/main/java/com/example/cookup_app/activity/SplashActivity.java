@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 import com.example.cookup_app.MainActivity;
 import com.example.cookup_app.R;
 import com.example.cookup_app.utils.ThemeManager;
+// Thêm firebase
+import com.google.firebase.FirebaseApp;
+
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -25,7 +29,10 @@ public class SplashActivity extends AppCompatActivity {
         ThemeManager.applyTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        // firebase
+        FirebaseApp.initializeApp(this);
+        Log.d("Firebase", "Firebase connected: " +
+                FirebaseApp.getInstance().getName());
         // Ánh xạ view — tìm view trong XML bằng id
         ImageView imgLogo = findViewById(R.id.imgLogo);
         TextView tvAppName = findViewById(R.id.tvAppName);
@@ -73,21 +80,22 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkLoginAndNavigate() {
+        // Check trực tiếp trạng thái đăng nhập từ Firebase Auth
+        com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
         SharedPreferences prefs = getSharedPreferences("cookup_prefs", MODE_PRIVATE);
         String token = prefs.getString("token", null);
 
         Intent intent;
-        if (token != null) {
+        // Nếu có user firebase HOẶC có token cục bộ thì mới cho vào Main
+        if (user != null || token != null) {
             intent = new Intent(SplashActivity.this, MainActivity.class);
         } else {
             intent = new Intent(SplashActivity.this, LoginActivity.class);
         }
 
         startActivity(intent);
-
-        // Animation chuyển màn hình — fade out
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
         finish();
     }
+
 }
