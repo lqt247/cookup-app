@@ -1,112 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_primary"
-    android:fillViewport="true">
+    android:background="@color/bg_primary">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="24dp">
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:name="com.example.cookup_app.fragment.HomeFragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/tvLogoMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CookUp"
-            android:textColor="@color/orange_primary"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginTop="60dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottomNavContainer"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
+        app:cardBackgroundColor="@color/nav_background"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardStatus"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/bg_card"
-            app:layout_constraintTop_toBottomOf="@id/tvLogoMain"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:itemIconTint="@color/nav_icon_selector"
+            app:itemTextColor="@color/nav_icon_selector"
+            app:itemIconSize="24dp"
+            app:itemHorizontalTranslationEnabled="false"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav_menu" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="24dp">
+    </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@android:drawable/checkbox_on_background"
-                    app:tint="@color/orange_primary"
-                    android:layout_marginBottom="16dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabUpload"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="Dang cong thuc"
+        android:src="@drawable/ic_logo_cookup"
+        app:backgroundTint="@color/orange_primary"
+        app:tint="@color/text_primary"
+        app:layout_constraintTop_toTopOf="@id/bottomNavContainer"
+        app:layout_constraintBottom_toBottomOf="@id/bottomNavContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        android:translationY="-8dp" />
 
-                <TextView
-                    android:id="@+id/tvWelcome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đăng nhập thành công!"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="center" />
-
-                <TextView
-                    android:id="@+id/tvUserEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="user@email.com"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/tvTestGuide"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Nhấn nút bên dưới để Đăng xuất, xóa toàn bộ session dữ liệu cũ và tiến hành kiểm tra (test) lại màn hình SplashActivity."
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_marginTop="32dp"
-            android:fontFamily="@font/poppins_medium"
-            app:layout_constraintTop_toBottomOf="@id/cardStatus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogout"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:text="Đăng xuất khỏi thiết bị"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"
-            app:backgroundTint="@color/orange_primary"
-            app:cornerRadius="12dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTestGuide"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
