@@ -1,24 +1,24 @@
 package com.example.cookup_app;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
+import androidx.fragment.app.Fragment;
 
-import com.example.cookup_app.R;
-import com.example.cookup_app.activity.SplashActivity;
+import android.os.Bundle;
+
+import com.example.cookup_app.fragment.FavoriteFragment;
+import com.example.cookup_app.fragment.HomeFragment;
+import com.example.cookup_app.fragment.PlanFragment;
+import com.example.cookup_app.fragment.SearchFragment;
 import com.example.cookup_app.utils.ThemeManager;
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView tvUserEmail;
-    private MaterialButton btnLogout;
-    private FirebaseAuth mAuth;
+    private BottomNavigationView bottomNavigationView;
+    private FloatingActionButton fabUpload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,43 +27,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Khởi tạo Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        bottomNavigationView = findViewById(R.id.bottomNav);
+        fabUpload = findViewById(R.id.fabUpload);
 
-        // Ánh xạ các thành phần giao diện
-        tvUserEmail = findViewById(R.id.tvUserEmail);
-        btnLogout = findViewById(R.id.btnLogout);
+        bottomNavigationView.setItemActiveIndicatorColor(ColorStateList.valueOf(Color.TRANSPARENT));
 
-        // Hiển thị email của tài khoản đang đăng nhập hiện tại
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null && currentUser.getEmail() != null) {
-            tvUserEmail.setText(currentUser.getEmail());
-        } else {
-            tvUserEmail.setText("Tài khoản chưa định danh");
+        if (savedInstanceState == null) {
+            switchFragment(new HomeFragment());
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
         }
 
-        // Xử lý sự kiện click nút Đăng xuất để test Splash
-        btnLogout.setOnClickListener(v -> {
-
-            // 1. Đăng xuất Firebase Session
-            if (mAuth.getCurrentUser() != null) {
-                mAuth.signOut();
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                switchFragment(new HomeFragment());
+                return true;
+            } else if (id == R.id.nav_search) {
+                switchFragment(new SearchFragment());
+                return true;
+            } else if (id == R.id.nav_favorite) {
+                switchFragment(new FavoriteFragment());
+                return true;
+            } else if (id == R.id.nav_plan) {
+                switchFragment(new PlanFragment());
+                return true;
             }
-
-            // 2. Xóa Token khỏi SharedPreferences (Giúp Splash không bị check trúng token nữa)
-            SharedPreferences prefs = getSharedPreferences("cookup_prefs", MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.remove("token");
-            editor.apply();
-
-            Toast.makeText(MainActivity.this, "Đăng xuất thành công! Đang khởi động lại màn hình Splash...", Toast.LENGTH_SHORT).show();
-
-            // 3. Chuyển hướng quay về màn hình SplashActivity để test
-            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
-            startActivity(intent);
-
-            // Xoá sạch bộ nhớ stack các Activity cũ để không thể bấm phím Back quay lại màn Main được nữa
-            finishAffinity();
+            return false;
         });
+
+        fabUpload.setOnClickListener(v ->
+                android.widget.Toast.makeText(this,
+                        "Tinh nang dang phat trien",
+                        android.widget.Toast.LENGTH_SHORT).show()
+        );
+    }
+
+    private void switchFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 }
