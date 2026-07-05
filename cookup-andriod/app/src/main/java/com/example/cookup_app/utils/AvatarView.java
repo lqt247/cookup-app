@@ -24,12 +24,16 @@ public class AvatarView extends MaterialCardView {
     }
 
     public void loadUrl(String imageUrl) {
-        Glide.with(getContext())
-                .load(imageUrl)
-                .circleCrop()
-                .placeholder(R.drawable.avatar_default_unknown)
-                .error(R.drawable.avatar_default_unknown)
-                .into(imgAvatar);
+        if (com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(getContext(), imageUrl)) {
+            Glide.with(getContext())
+                    .load(imageUrl)
+                    .circleCrop()
+                    .placeholder(R.drawable.avatar_default_unknown)
+                    .error(R.drawable.avatar_default_unknown)
+                    .into(imgAvatar);
+        } else {
+            imgAvatar.setImageResource(R.drawable.avatar_default_unknown);
+        }
     }
 
     public void setGender(String gender) {

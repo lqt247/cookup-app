@@ -49,8 +49,10 @@
         <item name="backgroundTint">@color/orange_primary</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="cornerRadius">12dp</item>
-        <item name="android:paddingTop">14dp</item>
-        <item name="android:paddingBottom">14dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
@@ -104,6 +106,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">20dp</item>
+    </style>
+
+    <style name="BottomNavText">
+        <item name="android:textSize">10sp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
 
 </resources>
