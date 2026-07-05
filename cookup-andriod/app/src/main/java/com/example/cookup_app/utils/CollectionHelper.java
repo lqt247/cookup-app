@@ -293,10 +293,11 @@ public class CollectionHelper {
 
         // 1. Remove from SharedPreferences bookmarked_recipes
         android.content.SharedPreferences prefs = context.getSharedPreferences("cookup_prefs", Context.MODE_PRIVATE);
-        java.util.HashSet<String> bookmarks = new java.util.HashSet<>(prefs.getStringSet("bookmarked_recipes", new java.util.HashSet<>()));
+        String uid = currentUser.getUid();
+        java.util.HashSet<String> bookmarks = new java.util.HashSet<>(prefs.getStringSet("bookmarked_recipes_" + uid, new java.util.HashSet<>()));
         if (bookmarks.contains(recipeIdStr)) {
             bookmarks.remove(recipeIdStr);
-            prefs.edit().putStringSet("bookmarked_recipes", bookmarks).apply();
+            prefs.edit().putStringSet("bookmarked_recipes_" + uid, bookmarks).apply();
             android.util.Log.d("CollectionDiagnostic", "removeRecipeFromAllFavoritesAndCollections [SHARED_PREFS]: Removed recipeId=" + recipeId + " from SharedPreferences");
         }
 

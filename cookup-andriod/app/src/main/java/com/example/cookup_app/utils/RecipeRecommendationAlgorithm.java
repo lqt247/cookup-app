@@ -44,28 +44,54 @@ public class RecipeRecommendationAlgorithm {
 
     /**
      * Thuật toán tìm kiếm và xếp hạng độ liên quan của công thức nấu ăn.
-     * Ưu tiên cao nhất là khớp tiêu đề món ăn, sau đó đến đầu bếp, quốc gia và giới thiệu món ăn.
+     * Ưu tiên cao nhất là khớp tiêu đề món ăn, sau đó đến đầu bếp, quốc gia, nguyên liệu và giới thiệu món ăn.
      */
     public static List<Recipe> searchAndRank(List<Recipe> allRecipes, String query) {
         if (allRecipes == null) return new ArrayList<>();
         if (query == null || query.trim().isEmpty()) return allRecipes;
 
-        String lowerQuery = query.toLowerCase().trim();
+        String rawQuery = query.toLowerCase().trim();
+        String accentlessQuery = removeVietnameseAccents(rawQuery);
         List<RecipeScoreWrapper> matched = new ArrayList<>();
 
         for (Recipe r : allRecipes) {
             double relevanceScore = 0;
 
-            if (r.getName() != null && r.getName().toLowerCase().contains(lowerQuery)) {
+            String name = r.getName() != null ? r.getName().toLowerCase() : "";
+            String chefName = r.getChefName() != null ? r.getChefName().toLowerCase() : "";
+            String country = r.getCountry() != null ? r.getCountry().toLowerCase() : "";
+            String description = r.getDescription() != null ? r.getDescription().toLowerCase() : "";
+
+            String nameAccentless = removeVietnameseAccents(name);
+            String chefNameAccentless = removeVietnameseAccents(chefName);
+            String countryAccentless = removeVietnameseAccents(country);
+            String descriptionAccentless = removeVietnameseAccents(description);
+
+            if (name.contains(rawQuery) || nameAccentless.contains(accentlessQuery)) {
                 relevanceScore += 100; // Khớp tên món ăn (Mức ưu tiên cao nhất)
             }
-            if (r.getChefName() != null && r.getChefName().toLowerCase().contains(lowerQuery)) {
+            if (chefName.contains(rawQuery) || chefNameAccentless.contains(accentlessQuery)) {
                 relevanceScore += 50;  // Khớp tên đầu bếp
             }
-            if (r.getCountry() != null && r.getCountry().toLowerCase().contains(lowerQuery)) {
+            if (country.contains(rawQuery) || countryAccentless.contains(accentlessQuery)) {
                 relevanceScore += 40;  // Khớp quốc gia của món ăn
             }
-            if (r.getDescription() != null && r.getDescription().toLowerCase().contains(lowerQuery)) {
+            
+            // Tìm kiếm theo nguyên liệu (Ưu tiên trung bình - cộng 30 điểm)
+            if (r.getIngredients() != null) {
+                for (com.example.cookup_app.model.Ingredient ing : r.getIngredients()) {
+                    if (ing.getName() != null) {
+                        String ingName = ing.getName().toLowerCase();
+                        String ingNameAccentless = removeVietnameseAccents(ingName);
+                        if (ingName.contains(rawQuery) || ingNameAccentless.contains(accentlessQuery)) {
+                            relevanceScore += 30;
+                            break; // Cộng tối đa 1 lần cho nguyên liệu
+                        }
+                    }
+                }
+            }
+
+            if (description.contains(rawQuery) || descriptionAccentless.contains(accentlessQuery)) {
                 relevanceScore += 20;  // Khớp từ khóa trong phần mô tả
             }
 
@@ -87,6 +113,17 @@ public class RecipeRecommendationAlgorithm {
             result.add(w.recipe);
         }
         return result;
+    }
+
+    /**
+     * Tiện ích loại bỏ dấu tiếng Việt để so khớp không phân biệt dấu.
+     */
+    public static String removeVietnameseAccents(String input) {
+        if (input == null) return "";
+        String temp = input.replace("đ", "d").replace("Đ", "D");
+        String normalized = java.text.Normalizer.normalize(temp, java.text.Normalizer.Form.NFD);
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalized).replaceAll("");
     }
 
     private static class RecipeScoreWrapper {

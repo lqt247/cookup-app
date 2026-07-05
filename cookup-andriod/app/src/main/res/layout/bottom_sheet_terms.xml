@@ -49,21 +49,19 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-
         android:id="@+id/btnAgree"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
+        android:paddingVertical="14dp"
         android:text="Tôi đồng ý"
         android:textColor="#FFFFFF"
-
         android:fontFamily="@font/poppins_semibold"
         android:textSize="15sp"
         android:layout_marginTop="20dp"
         app:backgroundTint="@color/orange_primary"
         app:cornerRadius="12dp"
         android:gravity="center"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"/>
+        android:includeFontPadding="true"/>
 
     <!-- Nút từ chối -->
     <TextView
