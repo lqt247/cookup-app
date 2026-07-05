@@ -71,6 +71,27 @@
                         android:layout_centerVertical="true"
                         android:orientation="horizontal">
 
+                        <!-- Edit Button (Visible only to owner) -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnDetailEdit"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:visibility="gone"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp"
+                            app:strokeWidth="0dp"
+                            app:cardBackgroundColor="#CC1E1410"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_pencil"
+                                app:tint="@color/text_primary"/>
+                        </com.google.android.material.card.MaterialCardView>
+
                         <!-- Share Button -->
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/btnDetailShare"
@@ -200,6 +221,27 @@
                             android:textSize="12sp"
                             android:fontFamily="@font/poppins_regular"/>
                     </LinearLayout>
+
+                    <!-- Follow Chef Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFollowChef"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="36dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Theo dõi"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="18dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#FF7238"
+                        app:backgroundTint="#160E0C"
+                        android:textColor="#FF7238"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="0dp"
+                        android:gravity="center" />
                 </LinearLayout>
 
                 <!-- Description -->
@@ -253,17 +295,18 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="4dp"
-                                    android:text="4.9"
+                                    android:text="0.0"
                                     android:textColor="@color/text_primary"
                                     android:textSize="14sp"
                                     android:textStyle="bold"
                                     android:fontFamily="@font/poppins_semibold"/>
                             </LinearLayout>
                             <TextView
+                                android:id="@+id/tvDetailReviewsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="128 Đánh giá"
+                                android:text="0 Đánh giá"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="10sp"
                                 android:fontFamily="@font/poppins_regular"/>
@@ -544,94 +587,126 @@
                     android:visibility="gone"
                     android:layout_marginTop="16dp">
 
-                    <!-- Standard fake reviews -->
+                    <!-- Dynamic Write Review Section -->
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardWriteReview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="16dp"
                         app:cardCornerRadius="16dp"
                         app:cardElevation="0dp"
-                        app:strokeWidth="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/orange_primary"
                         app:cardBackgroundColor="@color/bg_card">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:padding="16dp">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Thanh Hà"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="13sp"
-                                    android:textStyle="bold"
-                                    android:fontFamily="@font/poppins_semibold"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:text="⭐⭐⭐⭐⭐ 5.0"
-                                    android:textColor="@color/orange_primary"
-                                    android:textSize="12sp"
-                                    android:fontFamily="@font/poppins_semibold"/>
-                            </RelativeLayout>
                             <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đánh giá công thức này"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins_semibold"/>
+
+                            <!-- Star Ratings clickable -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+                                <ImageView
+                                    android:id="@+id/imgStar1"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar2"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar3"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar4"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar5"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edtReviewComment"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="Ngon quá, công thức chi tiết dễ làm và vị rất đậm đà chuẩn chỉ luôn! Cảm ơn người viết công thức nhé!"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"
+                                android:layout_marginTop="12dp"
+                                android:hint="Chia sẻ trải nghiệm nấu nướng của bạn..."
+                                android:textColorHint="@color/text_secondary"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:background="@android:color/transparent"
+                                android:maxLines="4"
+                                android:inputType="textMultiLine"
                                 android:fontFamily="@font/poppins_regular"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#251A17"
+                                android:layout_marginTop="8dp"/>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnSubmitReview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginTop="12dp"
+                                android:text="Gửi đánh giá"
+                                android:textColor="@color/text_primary"
+                                android:backgroundTint="@color/orange_primary"
+                                app:cornerRadius="8dp"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/poppins_semibold"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.card.MaterialCardView
+                    <!-- Dynamic reviews list container -->
+                    <LinearLayout
+                        android:id="@+id/containerReviews"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        app:cardCornerRadius="16dp"
-                        app:cardElevation="0dp"
-                        app:strokeWidth="0dp"
-                        app:cardBackgroundColor="@color/bg_card">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="16dp">
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Quốc Cường"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="13sp"
-                                    android:textStyle="bold"
-                                    android:fontFamily="@font/poppins_semibold"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:text="⭐⭐⭐⭐☆ 4.0"
-                                    android:textColor="@color/orange_primary"
-                                    android:textSize="12sp"
-                                    android:fontFamily="@font/poppins_semibold"/>
-                            </RelativeLayout>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:text="Lần đầu tiên hầm nước dùng bò thành công thơm mùi quế thảo quả thơm lừng nhà luôn á, tốn công xíu cơ mà đáng!"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"
-                                android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                        android:orientation="vertical">
+                        <!-- Populated programmatically -->
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -672,18 +747,20 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnStartCooking"
             android:layout_width="0dp"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
+            android:minHeight="54dp"
             android:layout_weight="1"
             android:layout_marginStart="16dp"
-            android:text="Bắt đầu nấu"
+            android:text="Bắt đầu nấu ăn"
             android:textColor="@color/text_primary"
             android:textSize="15sp"
             android:textStyle="bold"
             android:backgroundTint="@color/orange_primary"
-            app:icon="@drawable/ic_food_category"
-            app:iconTint="@color/text_primary"
             app:cornerRadius="27dp"
-            android:fontFamily="@font/poppins_bold"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingVertical="0dp"
+            android:gravity="center"
             app:elevation="4dp"/>
     </LinearLayout>
 

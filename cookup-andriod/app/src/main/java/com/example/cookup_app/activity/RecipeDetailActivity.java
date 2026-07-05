@@ -24,12 +24,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import androidx.appcompat.app.AlertDialog;
+import android.widget.EditText;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.button.MaterialButton;
+import android.graphics.Color;
+import android.content.res.ColorStateList;
 
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +58,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private TextView tvChefName;
     private TextView tvDetailDescription;
     private TextView tvDetailRating;
+    private TextView tvDetailReviewsCount;
     private TextView tvDetailTime;
     private TextView tvDetailCalories;
 
@@ -74,6 +81,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private View btnStartCooking;
     private ImageView imgDetailBookmark;
     private View btnDetailBookmark;
+    private View btnDetailEdit;
+
+    // Review fields
+    private LinearLayout containerReviews;
+    private int selectedReviewRating = 5;
+    private ImageView[] imgStars = new ImageView[5];
+    private EditText edtReviewComment;
+    private com.google.android.material.button.MaterialButton btnSubmitReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +115,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         tvChefName = findViewById(R.id.tvChefName);
         tvDetailDescription = findViewById(R.id.tvDetailDescription);
         tvDetailRating = findViewById(R.id.tvDetailRating);
+        tvDetailReviewsCount = findViewById(R.id.tvDetailReviewsCount);
         tvDetailTime = findViewById(R.id.tvDetailTime);
         tvDetailCalories = findViewById(R.id.tvDetailCalories);
 
@@ -122,6 +138,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         btnStartCooking = findViewById(R.id.btnStartCooking);
         imgDetailBookmark = findViewById(R.id.imgDetailBookmark);
         btnDetailBookmark = findViewById(R.id.btnDetailBookmark);
+        btnDetailEdit = findViewById(R.id.btnDetailEdit);
 
         findViewById(R.id.btnDetailBack).setOnClickListener(v -> finish());
         findViewById(R.id.btnDetailShare).setOnClickListener(v -> shareRecipe());
@@ -136,31 +153,117 @@ public class RecipeDetailActivity extends AppCompatActivity {
         tvPortionCount.setText(String.valueOf(currentServings));
 
         // Display images safely
-        if (recipe.getImageUrl() != null && !recipe.getImageUrl().trim().isEmpty()) {
+        if (recipe.getImageUrl() != null && !recipe.getImageUrl().trim().isEmpty() && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(this, recipe.getImageUrl())) {
             Glide.with(this)
                     .load(recipe.getImageUrl())
                     .placeholder(R.drawable.character_chef_1)
                     .error(R.drawable.character_chef_1)
                     .into(imgRecipeBanner);
-        } else if (recipe.getImageResId() != 0) {
+        } else if (com.example.cookup_app.utils.RecipeDataHelper.isValidDrawable(this, recipe.getImageResId())) {
             imgRecipeBanner.setImageResource(recipe.getImageResId());
         } else {
             imgRecipeBanner.setImageResource(R.drawable.character_chef_1);
         }
 
-        // Set custom chef name
-        if (recipe.getName().toLowerCase().contains("phở")) {
-            tvChefName.setText("Bởi Chef Hoàng Hải");
-            ImageView imgChef = findViewById(R.id.imgChefAvatar);
-            imgChef.setImageResource(R.drawable.avatar_default_male);
-        } else if (recipe.getName().toLowerCase().contains("bún bò")) {
-            tvChefName.setText("Bởi Chef Minh Tuấn");
-            ImageView imgChef = findViewById(R.id.imgChefAvatar);
-            imgChef.setImageResource(R.drawable.avatar_default_male);
-        } else {
-            tvChefName.setText("Bởi Chef Thu Hà");
-            ImageView imgChef = findViewById(R.id.imgChefAvatar);
-            imgChef.setImageResource(R.drawable.avatar_default_female);
+        // Check ownership to show Edit button
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null && recipe.getCreatorUid() != null && currentUser.getUid().equals(recipe.getCreatorUid())) {
+            if (btnDetailEdit != null) {
+                btnDetailEdit.setVisibility(View.VISIBLE);
+                btnDetailEdit.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, AddRecipeActivity.class);
+                    intent.putExtra("edit_recipe", recipe);
+                    startActivity(intent);
+                });
+            }
+        }
+
+        // Set custom chef name (dynamically pulled from database if creatorUid is present)
+        final String[] finalChefNameHolder = {recipe.getChefName()};
+        if (finalChefNameHolder[0] == null || finalChefNameHolder[0].trim().isEmpty()) {
+            if (recipe.getName().toLowerCase().contains("phở")) {
+                finalChefNameHolder[0] = "Chef Hoàng Hải";
+            } else if (recipe.getName().toLowerCase().contains("bún bò")) {
+                finalChefNameHolder[0] = "Chef Minh Tuấn";
+            } else {
+                finalChefNameHolder[0] = "Chef Thu Hà";
+            }
+        }
+        tvChefName.setText("Bởi " + finalChefNameHolder[0]);
+
+        ImageView imgChef = findViewById(R.id.imgChefAvatar);
+        if (imgChef != null) {
+            imgChef.setImageResource(R.drawable.avatar_default_unknown);
+        }
+
+        View.OnClickListener chefProfileClickListener = v -> {
+            if (recipe.getCreatorUid() != null && !recipe.getCreatorUid().isEmpty()) {
+                Intent profileIntent = new Intent(RecipeDetailActivity.this, ProfileActivity.class);
+                profileIntent.putExtra("userId", recipe.getCreatorUid());
+                startActivity(profileIntent);
+            }
+        };
+        tvChefName.setOnClickListener(chefProfileClickListener);
+        if (imgChef != null) {
+            imgChef.setOnClickListener(chefProfileClickListener);
+        }
+
+        if (recipe.getCreatorUid() != null && !recipe.getCreatorUid().isEmpty()) {
+            com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .document(recipe.getCreatorUid())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String realName = documentSnapshot.getString("displayName");
+                            if (realName == null || realName.trim().isEmpty()) {
+                                realName = documentSnapshot.getString("name");
+                            }
+                            String realAvatarUrl = documentSnapshot.getString("avatarUrl");
+                            if (realName != null && !realName.trim().isEmpty()) {
+                                finalChefNameHolder[0] = realName;
+                                tvChefName.setText("Bởi " + realName);
+                            }
+                            if (imgChef != null) {
+                                if (realAvatarUrl != null && !realAvatarUrl.trim().isEmpty() && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(this, realAvatarUrl)) {
+                                    Glide.with(RecipeDetailActivity.this)
+                                            .load(realAvatarUrl)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.avatar_default_unknown)
+                                            .error(R.drawable.avatar_default_unknown)
+                                            .into(imgChef);
+                                }
+                            }
+                        }
+                    });
+        }
+
+        // Setup Follow Chef button logic with Firebase "follows" collection (Preventing self-following)
+        MaterialButton btnFollowChef = findViewById(R.id.btnFollowChef);
+        String creatorUid = recipe.getCreatorUid();
+
+        if (btnFollowChef != null) {
+            if (currentUser != null && creatorUid != null && currentUser.getUid().equals(creatorUid)) {
+                btnFollowChef.setVisibility(View.GONE); // Self cannot follow self
+            } else {
+                btnFollowChef.setVisibility(View.VISIBLE);
+                if (currentUser != null && creatorUid != null) {
+                    String followDocId = currentUser.getUid() + "_" + creatorUid;
+                    com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                            .collection("follows")
+                            .document(followDocId)
+                            .get()
+                            .addOnSuccessListener(doc -> {
+                                boolean isFollowing = doc.exists();
+                                updateFollowButtonUI(btnFollowChef, isFollowing);
+                                btnFollowChef.setOnClickListener(v -> toggleFollowChef(btnFollowChef, isFollowing, creatorUid, finalChefNameHolder[0]));
+                            });
+                } else {
+                    btnFollowChef.setOnClickListener(v -> {
+                        Toast.makeText(this, "Vui lòng đăng nhập để theo dõi đầu bếp!", Toast.LENGTH_SHORT).show();
+                    });
+                }
+            }
         }
 
         // Setup tabs listeners
@@ -195,6 +298,25 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Đã cập nhật nguyên liệu cho \"" + recipe.getName() + "\" vào Danh sách đi chợ!", Toast.LENGTH_LONG).show();
         });
+
+        // Dynamic star rating & reviews submission setup
+        containerReviews = findViewById(R.id.containerReviews);
+        edtReviewComment = findViewById(R.id.edtReviewComment);
+        btnSubmitReview = findViewById(R.id.btnSubmitReview);
+        imgStars[0] = findViewById(R.id.imgStar1);
+        imgStars[1] = findViewById(R.id.imgStar2);
+        imgStars[2] = findViewById(R.id.imgStar3);
+        imgStars[3] = findViewById(R.id.imgStar4);
+        imgStars[4] = findViewById(R.id.imgStar5);
+
+        android.view.View cardWriteReview = findViewById(R.id.cardWriteReview);
+        if (cardWriteReview != null && currentUser != null && creatorUid != null && currentUser.getUid().equals(creatorUid)) {
+            cardWriteReview.setVisibility(View.GONE);
+        }
+
+        setupStarRatingSelector();
+        setupReviewSubmission();
+        loadRecipeReviews();
 
         // Bookmark listener
         updateBookmarkUI();
@@ -266,36 +388,6 @@ public class RecipeDetailActivity extends AppCompatActivity {
             tvDesc.setText(step.getInstructions());
 
             containerDetailSteps.addView(view);
-        }
-    }
-
-    private void toggleBookmark() {
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        HashSet<String> bookmarks = new HashSet<>(prefs.getStringSet(BOOKMARKS_KEY, new HashSet<>()));
-
-        String recipeIdStr = String.valueOf(recipe.getId());
-        if (bookmarks.contains(recipeIdStr)) {
-            bookmarks.remove(recipeIdStr);
-            Toast.makeText(this, "Đã bỏ yêu thích món ăn!", Toast.LENGTH_SHORT).show();
-        } else {
-            bookmarks.add(recipeIdStr);
-            Toast.makeText(this, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show();
-        }
-        prefs.edit().putStringSet(BOOKMARKS_KEY, bookmarks).apply();
-        updateBookmarkUI();
-    }
-
-    private void updateBookmarkUI() {
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        HashSet<String> bookmarks = new HashSet<>(prefs.getStringSet(BOOKMARKS_KEY, new HashSet<>()));
-        boolean isBookmarked = bookmarks.contains(String.valueOf(recipe.getId()));
-
-        if (isBookmarked) {
-            imgDetailBookmark.setImageResource(R.drawable.ic_bookmark);
-            imgDetailBookmark.setColorFilter(getResources().getColor(R.color.orange_primary));
-        } else {
-            imgDetailBookmark.setImageResource(R.drawable.ic_bookmark);
-            imgDetailBookmark.setColorFilter(getResources().getColor(R.color.text_primary));
         }
     }
 
@@ -399,7 +491,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         report.put("recipeName", recipe.getName());
         report.put("recipeImageUrl", recipe.getImageUrl() != null ? recipe.getImageUrl() : "");
         report.put("recipeImageResId", recipe.getImageResId());
-        
+
         // Author logic matching UI
         String author = "Chef Thu Hà";
         if (recipe.getName().toLowerCase().contains("phở")) {
@@ -408,7 +500,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             author = "Chef Minh Tuấn";
         }
         report.put("recipeAuthor", author);
-        
+
         report.put("reporterUid", user.getUid());
         report.put("reporterEmail", user.getEmail() != null ? user.getEmail() : "Ẩn danh");
         report.put("reason", reason);
@@ -425,6 +517,352 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Toast.makeText(RecipeDetailActivity.this, "Gửi báo cáo thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void updateFollowButtonUI(MaterialButton button, boolean isFollowing) {
+        if (isFollowing) {
+            button.setText("Đang theo dõi");
+            button.setTextColor(Color.parseColor("#FFF1ED"));
+            button.setBackgroundColor(Color.parseColor("#FF7238"));
+            button.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#FF7238")));
+        } else {
+            button.setText("Theo dõi");
+            button.setTextColor(Color.parseColor("#FF7238"));
+            button.setBackgroundColor(Color.parseColor("#160E0C"));
+            button.setStrokeColor(ColorStateList.valueOf(Color.parseColor("#FF7238")));
+        }
+    }
+
+    private void toggleFollowChef(MaterialButton btnFollowChef, boolean currentIsFollowing, String creatorUid, String chefName) {
+        com.google.firebase.auth.FirebaseUser currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null || creatorUid == null) return;
+
+        String followDocId = currentUser.getUid() + "_" + creatorUid;
+        com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+
+        btnFollowChef.setEnabled(false); // Disable during network call
+
+        if (currentIsFollowing) {
+            // Unfollow
+            db.collection("follows").document(followDocId).delete()
+                    .addOnSuccessListener(aVoid -> {
+                        db.collection("users").document(creatorUid)
+                                .update("followersCount", com.google.firebase.firestore.FieldValue.increment(-1));
+
+                        Toast.makeText(this, "Đã bỏ theo dõi " + chefName, Toast.LENGTH_SHORT).show();
+                        btnFollowChef.setEnabled(true);
+                        updateFollowButtonUI(btnFollowChef, false);
+                        // Rebind click listener with updated state
+                        btnFollowChef.setOnClickListener(v -> toggleFollowChef(btnFollowChef, false, creatorUid, chefName));
+                    })
+                    .addOnFailureListener(e -> btnFollowChef.setEnabled(true));
+        } else {
+            // Follow
+            java.util.Map<String, Object> followData = new java.util.HashMap<>();
+            followData.put("followerUid", currentUser.getUid());
+            followData.put("followedUid", creatorUid);
+
+            String tempFollowerName = currentUser.getDisplayName();
+            if (android.text.TextUtils.isEmpty(tempFollowerName)) {
+                tempFollowerName = currentUser.getEmail() != null ? currentUser.getEmail().split("@")[0] : "Một đầu bếp";
+            }
+            final String followerName = tempFollowerName;
+            followData.put("followerName", followerName);
+            followData.put("followedName", chefName);
+            followData.put("timestamp", System.currentTimeMillis());
+
+            db.collection("follows").document(followDocId).set(followData)
+                    .addOnSuccessListener(aVoid -> {
+                        db.collection("users").document(creatorUid)
+                                .update("followersCount", com.google.firebase.firestore.FieldValue.increment(1))
+                                .addOnFailureListener(e -> {
+                                    java.util.Map<String, Object> initialData = new java.util.HashMap<>();
+                                    initialData.put("followersCount", 1);
+                                    initialData.put("name", chefName);
+                                    db.collection("users").document(creatorUid).set(initialData, com.google.firebase.firestore.SetOptions.merge());
+                                });
+
+                        // Send real notification
+                        java.util.Map<String, Object> notificationData = new java.util.HashMap<>();
+                        notificationData.put("title", "Người theo dõi mới");
+                        notificationData.put("body", followerName + " đã bắt đầu theo dõi gian bếp của bạn. 👥");
+                        notificationData.put("type", "follow");
+                        notificationData.put("timestamp", System.currentTimeMillis());
+                        notificationData.put("read", false);
+                        notificationData.put("recipientUid", creatorUid);
+                        notificationData.put("senderUid", currentUser.getUid());
+
+                        db.collection("notifications").add(notificationData);
+
+                        Toast.makeText(this, "Đã theo dõi " + chefName + "!", Toast.LENGTH_SHORT).show();
+                        btnFollowChef.setEnabled(true);
+                        updateFollowButtonUI(btnFollowChef, true);
+                        // Rebind click listener with updated state
+                        btnFollowChef.setOnClickListener(v -> toggleFollowChef(btnFollowChef, true, creatorUid, chefName));
+                    })
+                    .addOnFailureListener(e -> btnFollowChef.setEnabled(true));
+        }
+    }
+
+    private void toggleBookmark() {
+        com.example.cookup_app.utils.CollectionHelper.showSaveToCollectionDialog(this, recipe, () -> updateBookmarkUI());
+    }
+
+    private void updateBookmarkUI() {
+        com.example.cookup_app.utils.CollectionHelper.checkIsBookmarked(this, recipe.getId(), isBookmarked -> {
+            if (isBookmarked) {
+                imgDetailBookmark.setColorFilter(getResources().getColor(R.color.orange_primary));
+            } else {
+                imgDetailBookmark.setColorFilter(getResources().getColor(R.color.text_primary));
+            }
+        });
+    }
+
+    private void setupStarRatingSelector() {
+        for (int i = 0; i < 5; i++) {
+            final int index = i;
+            imgStars[i].setOnClickListener(v -> {
+                selectedReviewRating = index + 1;
+                updateStarRatingUI();
+            });
+        }
+        updateStarRatingUI();
+    }
+
+    private void updateStarRatingUI() {
+        for (int i = 0; i < 5; i++) {
+            if (i < selectedReviewRating) {
+                imgStars[i].setColorFilter(getResources().getColor(R.color.orange_primary));
+            } else {
+                imgStars[i].setColorFilter(getResources().getColor(R.color.text_secondary));
+            }
+        }
+    }
+
+    private void setupReviewSubmission() {
+        btnSubmitReview.setOnClickListener(v -> {
+            com.google.firebase.auth.FirebaseUser currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+            if (currentUser == null) {
+                Toast.makeText(this, "Vui lòng đăng nhập để gửi đánh giá!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String creatorUid = recipe.getCreatorUid();
+            if (creatorUid != null && creatorUid.equals(currentUser.getUid())) {
+                Toast.makeText(this, "Bạn không thể tự đánh giá công thức nấu ăn của chính mình! ❤️", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            String comment = edtReviewComment.getText().toString().trim();
+            if (comment.isEmpty()) {
+                edtReviewComment.setError("Vui lòng nhập nội dung đánh giá");
+                edtReviewComment.requestFocus();
+                return;
+            }
+
+            btnSubmitReview.setEnabled(false);
+
+            String reviewId = java.util.UUID.randomUUID().toString();
+            String recipeIdStr = String.valueOf(recipe.getId());
+
+            SharedPreferences prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            String customUserName = prefs.getString("custom_user_name", "");
+            String customAvatarUrl = prefs.getString("custom_avatar_url", "");
+
+            String userName = customUserName;
+            if (android.text.TextUtils.isEmpty(userName)) {
+                userName = currentUser.getDisplayName();
+            }
+            if (android.text.TextUtils.isEmpty(userName)) {
+                userName = currentUser.getEmail() != null ? currentUser.getEmail().split("@")[0] : "Một đầu bếp";
+            }
+
+            com.example.cookup_app.model.RecipeReview review = new com.example.cookup_app.model.RecipeReview(
+                    reviewId,
+                    recipeIdStr,
+                    currentUser.getUid(),
+                    userName,
+                    customAvatarUrl,
+                    selectedReviewRating,
+                    comment
+            );
+
+            com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                    .collection("reviews")
+                    .document(reviewId)
+                    .set(review)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(this, "Gửi đánh giá thành công! Cảm ơn bạn ❤️", Toast.LENGTH_SHORT).show();
+                        edtReviewComment.setText("");
+                        selectedReviewRating = 5;
+                        updateStarRatingUI();
+                        btnSubmitReview.setEnabled(true);
+
+                        updateRecipeAverageRating(recipeIdStr);
+                        loadRecipeReviews();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Lỗi khi gửi đánh giá: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        btnSubmitReview.setEnabled(true);
+                    });
+        });
+    }
+
+    private void updateRecipeAverageRating(String recipeIdStr) {
+        com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+        db.collection("reviews")
+                .whereEqualTo("recipeId", recipeIdStr)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int count = 0;
+                    double avgRating = 0.0;
+                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                        double totalRating = 0;
+                        count = queryDocumentSnapshots.size();
+                        for (com.google.firebase.firestore.DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                            com.example.cookup_app.model.RecipeReview r = doc.toObject(com.example.cookup_app.model.RecipeReview.class);
+                            if (r != null) {
+                                totalRating += r.getRating();
+                            }
+                        }
+                        avgRating = totalRating / count;
+                        avgRating = Math.round(avgRating * 10.0) / 10.0;
+                    }
+
+                    db.collection("recipes")
+                            .document(recipeIdStr)
+                            .update("rating", avgRating);
+
+                    tvDetailRating.setText(String.valueOf(avgRating));
+                    if (tvDetailReviewsCount != null) {
+                        tvDetailReviewsCount.setText(count + " Đánh giá");
+                    }
+                    recipe.setRating(avgRating);
+                });
+    }
+
+    private void loadRecipeReviews() {
+        if (containerReviews == null) return;
+        containerReviews.removeAllViews();
+
+        String recipeIdStr = String.valueOf(recipe.getId());
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                .collection("reviews")
+                .whereEqualTo("recipeId", recipeIdStr)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int count = 0;
+                    double avgRating = 0.0;
+                    if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                        count = queryDocumentSnapshots.size();
+                        double totalRating = 0;
+                        LayoutInflater inflater = LayoutInflater.from(this);
+                        for (com.google.firebase.firestore.DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
+                            com.example.cookup_app.model.RecipeReview review = doc.toObject(com.example.cookup_app.model.RecipeReview.class);
+                            if (review != null) {
+                                totalRating += review.getRating();
+                                View view = inflater.inflate(R.layout.item_detail_review, containerReviews, false);
+
+                                ImageView imgAvatar = view.findViewById(R.id.imgReviewAvatar);
+                                TextView tvName = view.findViewById(R.id.tvReviewUserName);
+                                TextView tvStars = view.findViewById(R.id.tvReviewStars);
+                                TextView tvComment = view.findViewById(R.id.tvReviewComment);
+
+                                // Show the snapshot first for instant feedback, then override with
+                                // the reviewer's LIVE profile data below (name/avatar may have changed since).
+                                tvName.setText(review.getUserName());
+                                tvComment.setText(review.getComment());
+
+                                StringBuilder starsText = new StringBuilder();
+                                for (int i = 0; i < 5; i++) {
+                                    if (i < (int)review.getRating()) {
+                                        starsText.append("⭐");
+                                    } else {
+                                        starsText.append("☆");
+                                    }
+                                }
+                                starsText.append(" ").append(review.getRating());
+                                tvStars.setText(starsText.toString());
+
+                                if (review.getUserAvatar() != null && !review.getUserAvatar().trim().isEmpty() && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(this, review.getUserAvatar())) {
+                                    Glide.with(RecipeDetailActivity.this)
+                                            .load(review.getUserAvatar())
+                                            .circleCrop()
+                                            .placeholder(R.drawable.avatar_default_unknown)
+                                            .error(R.drawable.avatar_default_unknown)
+                                            .into(imgAvatar);
+                                } else {
+                                    imgAvatar.setImageResource(R.drawable.avatar_default_unknown);
+                                }
+
+                                // Tap a review to open that reviewer's public profile (same as the follow list).
+                                final String reviewerUid = review.getUserId();
+                                if (!android.text.TextUtils.isEmpty(reviewerUid)) {
+                                    view.setClickable(true);
+                                    view.setFocusable(true);
+                                    view.setOnClickListener(v -> {
+                                        Intent profileIntent = new Intent(RecipeDetailActivity.this, ProfileActivity.class);
+                                        profileIntent.putExtra("userId", reviewerUid);
+                                        startActivity(profileIntent);
+                                    });
+
+                                    // Fetch the reviewer's current profile so name/avatar always match
+                                    // what they've set on their profile, regardless of when they reviewed.
+                                    com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                                            .collection("users")
+                                            .document(reviewerUid)
+                                            .get()
+                                            .addOnSuccessListener(userDoc -> {
+                                                if (userDoc == null || !userDoc.exists() || isFinishing()) return;
+
+                                                String liveName = userDoc.getString("displayName");
+                                                if (android.text.TextUtils.isEmpty(liveName)) {
+                                                    liveName = userDoc.getString("name");
+                                                }
+                                                if (!android.text.TextUtils.isEmpty(liveName)) {
+                                                    tvName.setText(liveName);
+                                                }
+
+                                                String liveAvatar = userDoc.getString("avatarUrl");
+                                                if (!android.text.TextUtils.isEmpty(liveAvatar) && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(this, liveAvatar)) {
+                                                    Glide.with(RecipeDetailActivity.this)
+                                                            .load(liveAvatar)
+                                                            .circleCrop()
+                                                            .placeholder(R.drawable.avatar_default_unknown)
+                                                            .error(R.drawable.avatar_default_unknown)
+                                                            .into(imgAvatar);
+                                                } else if (android.text.TextUtils.isEmpty(review.getUserAvatar())) {
+                                                    imgAvatar.setImageResource(R.drawable.avatar_default_unknown);
+                                                }
+                                            });
+                                }
+
+                                containerReviews.addView(view);
+                            }
+                        }
+                        avgRating = totalRating / count;
+                        avgRating = Math.round(avgRating * 10.0) / 10.0;
+                        tvDetailRating.setText(String.valueOf(avgRating));
+                        if (tvDetailReviewsCount != null) {
+                            tvDetailReviewsCount.setText(count + " Đánh giá");
+                        }
+                        recipe.setRating(avgRating);
+                    } else {
+                        tvDetailRating.setText(String.valueOf(recipe.getRating() == 0.0 ? "0.0" : recipe.getRating()));
+                        if (tvDetailReviewsCount != null) {
+                            tvDetailReviewsCount.setText("0 Đánh giá");
+                        }
+                        TextView tvEmpty = new TextView(this);
+                        tvEmpty.setText("Chưa có đánh giá nào cho công thức này. Hãy là người đầu tiên chia sẻ cảm nhận!");
+                        tvEmpty.setTextColor(getResources().getColor(R.color.text_secondary));
+                        tvEmpty.setGravity(android.view.Gravity.CENTER);
+                        tvEmpty.setPadding(32, 32, 32, 32);
+                        containerReviews.addView(tvEmpty);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi tải đánh giá: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 }

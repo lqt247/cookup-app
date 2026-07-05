@@ -47,6 +47,7 @@
                 </FrameLayout>
 
                 <TextView
+                    android:id="@+id/tvHeaderTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -174,7 +175,7 @@
                 android:textColorHint="#5A4A45"
                 android:textSize="14sp" />
 
-            <!-- THỜI GIAN NẤU and KHẨU PHẦN side-by-side -->
+            <!-- THỜI GIAN NẤU, KHẨU PHẦN and NĂNG LƯỢNG side-by-side -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,7 +186,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="4dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -193,7 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="THỜI GIAN NẤU"
+                        android:text="THỜI GIAN"
                         android:textColor="#8F756C"
                         android:textSize="11sp"
                         android:textStyle="bold" />
@@ -204,11 +205,11 @@
                         android:background="@drawable/bg_edittext_outline"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="12dp">
+                        android:paddingHorizontal="8dp">
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:src="@drawable/ic_time_clock"
                             app:tint="#8F756C" />
 
@@ -220,11 +221,11 @@
                             android:fontFamily="@font/poppins_regular"
                             android:hint="Phút"
                             android:inputType="number"
-                            android:paddingStart="8dp"
+                            android:paddingStart="6dp"
                             android:paddingEnd="0dp"
                             android:textColor="#FFF1ED"
                             android:textColorHint="#5A4A45"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -232,7 +233,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -251,11 +253,11 @@
                         android:background="@drawable/bg_edittext_outline"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="12dp">
+                        android:paddingHorizontal="8dp">
 
                         <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:src="@drawable/ic_people"
                             app:tint="#8F756C" />
 
@@ -267,11 +269,58 @@
                             android:fontFamily="@font/poppins_regular"
                             android:hint="Người"
                             android:inputType="number"
-                            android:paddingStart="8dp"
+                            android:paddingStart="6dp"
                             android:paddingEnd="0dp"
                             android:textColor="#FFF1ED"
                             android:textColorHint="#5A4A45"
-                            android:textSize="14sp" />
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="CALORIES"
+                        android:textColor="#8F756C"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_edittext_outline"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_calories"
+                            app:tint="#8F756C" />
+
+                        <EditText
+                            android:id="@+id/edtCalories"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="kcal"
+                            android:inputType="number"
+                            android:paddingStart="6dp"
+                            android:paddingEnd="0dp"
+                            android:textColor="#FFF1ED"
+                            android:textColorHint="#5A4A45"
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -422,6 +471,18 @@
                         android:text="Âu"
                         android:textColor="#FFF1ED"
                         android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/chipCountryOther"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_chip_unselected"
+                        android:gravity="center"
+                        android:layout_marginEnd="8dp"
+                        android:paddingHorizontal="16dp"
+                        android:text="Khác..."
+                        android:textColor="#FFF1ED"
+                        android:textSize="13sp" />
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -475,55 +536,55 @@
                             android:textSize="13sp" />
                     </LinearLayout>
 
-                    <!-- Example Tag 1 -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_chip_unselected"
-                        android:gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:paddingHorizontal="12dp"
-                        android:orientation="horizontal">
+                    <!--                    &lt;!&ndash; Example Tag 1 &ndash;&gt;-->
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="36dp"-->
+                    <!--                        android:background="@drawable/bg_chip_unselected"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginEnd="8dp"-->
+                    <!--                        android:paddingHorizontal="12dp"-->
+                    <!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Món mặn"
-                            android:textColor="#FFF1ED"
-                            android:textSize="13sp" />
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:text="Món mặn"-->
+                    <!--                            android:textColor="#FFF1ED"-->
+                    <!--                            android:textSize="13sp" />-->
 
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginStart="6dp"
-                            android:src="@drawable/ic_close"
-                            app:tint="#8F756C" />
-                    </LinearLayout>
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_width="14dp"-->
+                    <!--                            android:layout_height="14dp"-->
+                    <!--                            android:layout_marginStart="6dp"-->
+                    <!--                            android:src="@drawable/ic_close"-->
+                    <!--                            app:tint="#8F756C" />-->
+                    <!--                    </LinearLayout>-->
 
-                    <!-- Example Tag 2 -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_chip_unselected"
-                        android:gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:paddingHorizontal="12dp"
-                        android:orientation="horizontal">
+                    <!--                    &lt;!&ndash; Example Tag 2 &ndash;&gt;-->
+                    <!--                    <LinearLayout-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="36dp"-->
+                    <!--                        android:background="@drawable/bg_chip_unselected"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:layout_marginEnd="8dp"-->
+                    <!--                        android:paddingHorizontal="12dp"-->
+                    <!--                        android:orientation="horizontal">-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ăn tối"
-                            android:textColor="#FFF1ED"
-                            android:textSize="13sp" />
+                    <!--                        <TextView-->
+                    <!--                            android:layout_width="wrap_content"-->
+                    <!--                            android:layout_height="wrap_content"-->
+                    <!--                            android:text="Ăn tối"-->
+                    <!--                            android:textColor="#FFF1ED"-->
+                    <!--                            android:textSize="13sp" />-->
 
-                        <ImageView
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-                            android:layout_marginStart="6dp"
-                            android:src="@drawable/ic_close"
-                            app:tint="#8F756C" />
-                    </LinearLayout>
+                    <!--                        <ImageView-->
+                    <!--                            android:layout_width="14dp"-->
+                    <!--                            android:layout_height="14dp"-->
+                    <!--                            android:layout_marginStart="6dp"-->
+                    <!--                            android:src="@drawable/ic_close"-->
+                    <!--                            app:tint="#8F756C" />-->
+                    <!--                    </LinearLayout>-->
                 </LinearLayout>
             </HorizontalScrollView>
 
@@ -637,15 +698,22 @@
             android:id="@+id/btnSaveRecipe"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:minHeight="56dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingVertical="0dp"
             android:text="Gửi công thức"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="none"
             android:fontFamily="@font/poppins_semibold"
             app:icon="@drawable/ic_send"
             app:iconPadding="10dp"
             app:iconGravity="textStart"
+            app:iconSize="20dp"
             app:backgroundTint="#FF7238"
             app:cornerRadius="28dp" />
     </LinearLayout>

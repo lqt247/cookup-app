@@ -76,6 +76,52 @@
                     app:tint="#8F756C" />
             </FrameLayout>
 
+            <!-- Step duration container -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/boxStepImage"
+                android:layout_toStartOf="@+id/btnDeleteStep"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="8dp"
+                android:background="@drawable/bg_edittext_outline">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_time_clock"
+                    app:tint="#8F756C" />
+
+                <EditText
+                    android:id="@+id/edtStepDuration"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@null"
+                    android:hint="Phút"
+                    android:textColorHint="#5A4A45"
+                    android:textColor="#FFF1ED"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="phút"
+                    android:textColor="#8F756C"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_regular" />
+            </LinearLayout>
+
             <!-- Step deletion button aligned to the right -->
             <ImageView
                 android:id="@+id/btnDeleteStep"
