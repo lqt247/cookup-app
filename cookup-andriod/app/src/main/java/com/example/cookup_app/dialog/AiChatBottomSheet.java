@@ -14,7 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import com.example.cookup_app.BuildConfig;
 import com.example.cookup_app.R;
 import com.example.cookup_app.activity.RecipeDetailActivity;
+import com.example.cookup_app.model.Ingredient;
 import com.example.cookup_app.model.Recipe;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -44,7 +45,7 @@ import java.util.concurrent.Executors;
 
 public class AiChatBottomSheet extends BottomSheetDialogFragment {
 
-    private ScrollView scrollAiChatMessages;
+    private NestedScrollView scrollAiChatMessages;
     private LinearLayout containerAiChatMessages;
     private LinearLayout containerAiIngredientChips;
     private EditText edtAiChatInput;
@@ -54,6 +55,10 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
     private final List<String> currentIngredients = new ArrayList<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
+
+    // Danh sách công thức THẬT được tải từ Firebase Firestore, dùng để gợi ý cho người dùng
+    private final List<Recipe> firestoreRecipes = new ArrayList<>();
+    private boolean firestoreRecipesLoaded = false;
 
     @Nullable
     @Override
@@ -65,7 +70,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Bind Views
+        // Liên kết các thành phần giao diện (Views)
         scrollAiChatMessages = view.findViewById(R.id.scrollAiChatMessages);
         containerAiChatMessages = view.findViewById(R.id.containerAiChatMessages);
         containerAiIngredientChips = view.findViewById(R.id.containerAiIngredientChips);
@@ -73,16 +78,24 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
         btnAiChatSend = view.findViewById(R.id.btnAiChatSend);
         btnAiAddIngredientDirect = view.findViewById(R.id.btnAiAddIngredientDirect);
 
-        // Close action
+        // Sự kiện nút đóng
         view.findViewById(R.id.btnAiChatClose).setOnClickListener(v -> dismiss());
 
-        // Quick Input suggestion tags setup
+        // Thiết lập các thẻ gợi ý nguyên liệu nhanh
         setupSuggestedChips();
 
-        // Welcome message
-        addAiMessageBubble("Xin chào! Tôi là Trợ lý nấu ăn CookUp. Bạn đang có những nguyên liệu gì trong tủ lạnh thế? Hãy chọn nhanh bên dưới hoặc nhập nguyên liệu nhé! 🍳", null);
+        // Tải danh sách công thức thật từ Firebase Firestore để dùng làm gợi ý cho AI
+        loadRecipesFromFirestore();
 
-        // Input Actions
+        // Tin nhắn chào mừng kèm hướng dẫn API Key thông minh nếu chưa cấu hình
+        String welcomeMsg = "Xin chào! Tôi là Trợ lý nấu ăn CookUp. Bạn đang có những nguyên liệu gì trong tủ lạnh thế? Hãy chọn nhanh bên dưới hoặc nhập nguyên liệu nhé! 🍳";
+        String currentKey = BuildConfig.GEMINI_API_KEY;
+        if (TextUtils.isEmpty(currentKey) || "MY_GEMINI_API_KEY".equals(currentKey)) {
+            welcomeMsg += "\n\n*(Lưu ý: Trợ lý đang chạy mô phỏng ngoại tuyến. Bạn hãy nhập GEMINI_API_KEY vào tab Secrets của ứng dụng để kích hoạt Trí tuệ nhân tạo AI thật sự nhé!)*";
+        }
+        addAiMessageBubble(welcomeMsg, null);
+
+        // Xử lý các sự kiện nhập liệu
         edtAiChatInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 handleSendAction();
@@ -93,7 +106,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
 
         btnAiChatSend.setOnClickListener(v -> handleSendAction());
 
-        // Add ingredient directly on plus icon click
+        // Thêm trực tiếp nguyên liệu khi nhấn vào nút cộng
         btnAiAddIngredientDirect.setOnClickListener(v -> {
             String input = edtAiChatInput.getText().toString().trim();
             if (!TextUtils.isEmpty(input)) {
@@ -109,17 +122,46 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         BottomSheetDialog dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
-        // Force wrap_content height behavior but let it slide correctly
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
         dialog.setOnShowListener(dialogInterface -> {
             BottomSheetDialog d = (BottomSheetDialog) dialogInterface;
             View bottomSheetInternal = d.findViewById(com.google.android.material.R.id.design_bottom_sheet);
             if (bottomSheetInternal != null) {
+                com.google.android.material.bottomsheet.BottomSheetBehavior<View> behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(bottomSheetInternal);
+                behavior.setState(com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED);
+                behavior.setSkipCollapsed(true);
                 ViewGroup.LayoutParams layoutParams = bottomSheetInternal.getLayoutParams();
                 layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 bottomSheetInternal.setLayoutParams(layoutParams);
             }
         });
         return dialog;
+    }
+
+    private void loadRecipesFromFirestore() {
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                .collection("recipes")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    firestoreRecipes.clear();
+                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                        for (com.google.firebase.firestore.DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                            Recipe recipe = doc.toObject(Recipe.class);
+                            if (recipe != null) {
+                                recipe = com.example.cookup_app.utils.RecipeDataHelper.sanitizeAndHealRecipeId(doc, recipe);
+                                firestoreRecipes.add(recipe);
+                            }
+                        }
+                    }
+                    firestoreRecipesLoaded = true;
+                })
+                .addOnFailureListener(e -> {
+                    // Nếu tải thất bại, giữ danh sách rỗng - hàm gợi ý sẽ tự xử lý an toàn
+                    firestoreRecipesLoaded = true;
+                    android.util.Log.e("AiChatBottomSheet", "Lỗi tải công thức từ Firestore: " + e.getMessage());
+                });
     }
 
     private void setupSuggestedChips() {
@@ -136,16 +178,16 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
         tvChip.setTextColor(getResources().getColor(R.color.text_primary));
         tvChip.setTextSize(13);
         tvChip.setBackgroundResource(R.drawable.bg_chip_unselected);
-        
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, 16, 0);
         tvChip.setLayoutParams(params);
-        
+
         int py = (int) (6 * getResources().getDisplayMetrics().density);
         int px = (int) (12 * getResources().getDisplayMetrics().density);
         tvChip.setPadding(px, py, px, py);
-        
+
         tvChip.setClickable(true);
         tvChip.setFocusable(true);
         tvChip.setOnClickListener(v -> {
@@ -169,12 +211,12 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
         tvChip.setTextColor(getResources().getColor(R.color.text_primary));
         tvChip.setTextSize(13);
         tvChip.setBackgroundResource(R.drawable.bg_chip_selected);
-        
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(0, 0, 16, 0);
         tvChip.setLayoutParams(params);
-        
+
         int py = (int) (6 * getResources().getDisplayMetrics().density);
         int px = (int) (12 * getResources().getDisplayMetrics().density);
         tvChip.setPadding(px, py, px, py);
@@ -199,7 +241,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
 
         edtAiChatInput.setText("");
 
-        // Build elegant query message
+        // Xây dựng tin nhắn câu hỏi đầy đủ
         StringBuilder queryText = new StringBuilder();
         if (!currentIngredients.isEmpty()) {
             queryText.append("Tôi đang có: ");
@@ -215,13 +257,13 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
             queryText.append("Gợi ý cho tôi món ăn ngon và phù hợp nhé!");
         }
 
-        // 1. Display User Message
+        // 1. Hiển thị tin nhắn của Người dùng
         addUserMessageBubble(queryText.toString());
 
-        // 2. Add AI Typing Bubble
+        // 2. Thêm bong bóng tin nhắn chờ của AI (đang suy nghĩ...)
         final View aiBubbleView = addAiMessageBubble("Đang suy nghĩ... 🍳", null);
 
-        // 3. Trigger API Call
+        // 3. Kích hoạt gọi API
         executeGeminiQuery(queryText.toString(), aiBubbleView);
     }
 
@@ -255,7 +297,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
                 tvInfo.setText(r.getDifficulty() + " • " + r.getCookTimeMinutes() + " phút");
                 tvMatch.setText("Phù hợp 95%");
 
-                if (r.getImageResId() != 0) {
+                if (com.example.cookup_app.utils.RecipeDataHelper.isValidDrawable(getContext(), r.getImageResId())) {
                     img.setImageResource(r.getImageResId());
                 } else {
                     img.setImageResource(R.drawable.character_chef_1);
@@ -299,7 +341,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
                 tvInfo.setText(r.getDifficulty() + " • " + r.getCookTimeMinutes() + " phút");
                 tvMatch.setText("Phù hợp 95%");
 
-                if (r.getImageResId() != 0) {
+                if (com.example.cookup_app.utils.RecipeDataHelper.isValidDrawable(getContext(), r.getImageResId())) {
                     img.setImageResource(r.getImageResId());
                 } else {
                     img.setImageResource(R.drawable.character_chef_2);
@@ -321,9 +363,9 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
     private void executeGeminiQuery(String userQuery, View aiBubbleView) {
         String apiKey = BuildConfig.GEMINI_API_KEY;
 
-        // Check if there is a real API key configured
+        // Kiểm tra xem có cấu hình API Key thật hay không
         if (TextUtils.isEmpty(apiKey) || "MY_GEMINI_API_KEY".equals(apiKey)) {
-            // Fall back to rule-based mock engine with delay
+            // Chuyển sang sử dụng bộ máy gợi ý cục bộ có sẵn nếu chưa có API Key
             mainHandler.postDelayed(() -> {
                 LocalRecommendation result = runLocalRecommendationEngine(userQuery);
                 updateAiMessageBubble(aiBubbleView, result.message, result.recipes);
@@ -333,33 +375,49 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
 
         executorService.execute(() -> {
             try {
-                String systemPrompt = "Bạn là Trợ lý nấu ăn CookUp thông minh và thân thiện. " +
-                        "Nhiệm vụ của bạn là đưa ra các gợi ý món ăn ngon dựa trên nguyên liệu của người dùng, " +
-                        "và tư vấn ẩm thực súc tích, ngắn gọn bằng Tiếng Việt. " +
-                        "Hãy tư vấn một cách nhiệt tình.";
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEEE, 'ngày' dd/MM/yyyy, 'giờ' HH:mm", new java.util.Locale("vi", "VN"));
+                String currentDateTime = sdf.format(new java.util.Date());
 
-                URL url = new URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey);
+                String systemPrompt = "Bạn là Trợ lý nấu ăn CookUp thông minh, thân thiện và vạn năng. " +
+                        "Nhiệm vụ chính của bạn là gợi ý món ăn ngon dựa trên nguyên liệu của người dùng, " +
+                        "nhưng bạn sẵn sàng trả lời BẤT KỲ CÂU HỎI NÀO khác mà người dùng đưa ra (như khoa học, đời sống, thời tiết, toán học, hỏi thăm, trò chuyện thông thường). " +
+                        "Hãy luôn trả lời một cách tự nhiên, nhiệt tình và súc tích bằng Tiếng Việt.\n\n" +
+                        "THỜI GIAN HIỆN TẠI CỦA HỆ THỐNG: " + currentDateTime + ".\n" +
+                        "Khi người dùng đặt câu hỏi liên quan đến thời gian như 'hôm nay', 'ngày mai', 'hôm qua', 'tuần này', 'bây giờ', hoặc ngày tháng năm cụ thể, hãy áp dụng tư duy logic thời gian chuẩn xác nhất dựa trên mốc thời gian hệ thống được cung cấp ở trên để trả lời chính xác, đầy đủ và thông thái.";
+
+                URL url = new URL("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=" + apiKey);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
+                // Đặt thời gian chờ hợp lý để tránh treo lâu khi mạng yếu hoặc API phản hồi chậm
+                conn.setConnectTimeout(8000);
+                conn.setReadTimeout(15000);
 
-                // Build Request Body
+                // Xây dựng nội dung yêu cầu (Request Body) chuẩn API của Gemini
                 JSONObject requestBody = new JSONObject();
+
+                // 1. Cấu hình nội dung hội thoại (contents)
                 JSONArray contentsArray = new JSONArray();
                 JSONObject contentObj = new JSONObject();
                 JSONArray partsArray = new JSONArray();
-
-                // System Instruction block
-                JSONObject systemPart = new JSONObject();
-                systemPart.put("text", systemPrompt + "\n\nUser query: " + userQuery);
-                partsArray.put(systemPart);
-
+                JSONObject userPart = new JSONObject();
+                userPart.put("text", userQuery);
+                partsArray.put(userPart);
                 contentObj.put("parts", partsArray);
                 contentsArray.put(contentObj);
                 requestBody.put("contents", contentsArray);
 
-                // Send request
+                // 2. Cấu hình chỉ dẫn hệ thống của AI (systemInstruction)
+                JSONObject systemInstructionObj = new JSONObject();
+                JSONArray systemPartsArray = new JSONArray();
+                JSONObject systemPartObj = new JSONObject();
+                systemPartObj.put("text", systemPrompt);
+                systemPartsArray.put(systemPartObj);
+                systemInstructionObj.put("parts", systemPartsArray);
+                requestBody.put("systemInstruction", systemInstructionObj);
+
+                // Gửi yêu cầu qua kết nối mạng
                 OutputStream os = conn.getOutputStream();
                 os.write(requestBody.toString().getBytes("utf-8"));
                 os.close();
@@ -374,7 +432,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
                     }
                     br.close();
 
-                    // Parse JSON response
+                    // Phân tích cú pháp phản hồi JSON
                     JSONObject jsonResponse = new JSONObject(response.toString());
                     JSONArray candidates = jsonResponse.getJSONArray("candidates");
                     JSONObject firstCandidate = candidates.getJSONObject(0);
@@ -382,7 +440,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
                     JSONArray parts = content.getJSONArray("parts");
                     String aiText = parts.getJSONObject(0).getString("text");
 
-                    // Map matching recipes
+                    // Tìm kiếm các công thức nấu ăn khớp với câu hỏi
                     List<Recipe> matchingRecipes = matchSampleRecipesForQuery(userQuery);
 
                     mainHandler.post(() -> {
@@ -390,72 +448,138 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
                     });
 
                 } else {
-                    // Fall back to rule-based engine on HTTP failure
+                    // Chuyển sang câu trả lời hữu ích dự phòng (fallback) khi gặp lỗi kết nối HTTP
+                    String fallbackMsg = generateFallbackMessage();
+                    List<Recipe> matchingRecipes = matchSampleRecipesForQuery(userQuery);
                     mainHandler.post(() -> {
-                        LocalRecommendation result = runLocalRecommendationEngine(userQuery);
-                        updateAiMessageBubble(aiBubbleView, result.message, result.recipes);
+                        updateAiMessageBubble(aiBubbleView, fallbackMsg, matchingRecipes);
                     });
                 }
 
             } catch (Exception e) {
-                // Fall back to rule-based engine on Exception
+                // Chuyển sang câu trả lời hữu ích dự phòng (fallback) khi xảy ra ngoại lệ (Exception)
+                String fallbackMsg = generateFallbackMessage();
+                List<Recipe> matchingRecipes = matchSampleRecipesForQuery(userQuery);
                 mainHandler.post(() -> {
-                    LocalRecommendation result = runLocalRecommendationEngine(userQuery);
-                    updateAiMessageBubble(aiBubbleView, result.message, result.recipes);
+                    updateAiMessageBubble(aiBubbleView, fallbackMsg, matchingRecipes);
                 });
             }
         });
     }
 
+    private String generateFallbackMessage() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Xin lỗi bạn, kết nối của mình đang bận hoặc có lỗi xảy ra 😢.\n\nTuy nhiên, dựa trên kinh nghiệm của mình");
+        if (!currentIngredients.isEmpty()) {
+            sb.append(", bạn có thể thử kết hợp các nguyên liệu của bạn (");
+            for (int i = 0; i < currentIngredients.size(); i++) {
+                sb.append(currentIngredients.get(i));
+                if (i < currentIngredients.size() - 1) sb.append(", ");
+            }
+            sb.append(") để làm món xào tỏi thơm lừng hoặc nấu canh súp thanh mát nhé! 🍲");
+        } else {
+            sb.append(", bạn có thể thử chế biến các nguyên liệu sẵn có trong tủ lạnh như thịt, cà chua, trứng để nấu những món ăn gia đình đơn giản, ấm cúng nhé! 🍲");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Tìm các công thức THẬT trong Firestore khớp với câu hỏi/nguyên liệu của người dùng.
+     * Không còn tạo dữ liệu giả (Recipe ảo không tồn tại trong Firebase) như trước đây.
+     */
     private List<Recipe> matchSampleRecipesForQuery(String query) {
         String lowerQuery = query.toLowerCase();
-        List<Recipe> suggestions = new ArrayList<>();
+        List<Recipe> matched = new ArrayList<>();
 
-        if (lowerQuery.contains("phở") || lowerQuery.contains("bo") || lowerQuery.contains("bò")) {
-            suggestions.add(new Recipe(101, "Phở Bò Gia Truyền", 120, 4.9, 450, R.drawable.character_chef_1));
-        }
-        if (lowerQuery.contains("bánh mì") || lowerQuery.contains("thịt") || lowerQuery.contains("heo")) {
-            suggestions.add(new Recipe(102, "Bánh Mì Thịt Nướng", 30, 4.8, 320, R.drawable.character_chef_2));
-        }
-        if (lowerQuery.contains("bánh xèo") || lowerQuery.contains("xèo") || lowerQuery.contains("tôm")) {
-            suggestions.add(new Recipe(103, "Bánh Xèo Miền Tây", 45, 4.6, 380, R.drawable.character_chef_1));
-        }
-        if (lowerQuery.contains("gỏi cuốn") || lowerQuery.contains("cuốn") || lowerQuery.contains("tôm") || lowerQuery.contains("heo")) {
-            suggestions.add(new Recipe(104, "Gỏi Cuốn Tôm Thịt", 15, 4.7, 250, R.drawable.character_chef_2));
-        }
-        if (lowerQuery.contains("kho tàu") || lowerQuery.contains("thịt kho") || lowerQuery.contains("trứng")) {
-            suggestions.add(new Recipe(105, "Thịt Kho Tàu Truyền Thống", 60, 4.9, 520, R.drawable.character_chef_1));
+        // Nếu Firestore chưa tải xong hoặc không có công thức nào, không gợi ý bừa
+        if (firestoreRecipes.isEmpty()) {
+            return matched;
         }
 
-        // If nothing matches, provide two delicious fallbacks
-        if (suggestions.isEmpty()) {
-            suggestions.add(new Recipe(102, "Bánh Mì Thịt Nướng", 30, 4.8, 320, R.drawable.character_chef_2));
-            suggestions.add(new Recipe(104, "Gỏi Cuốn Tôm Thịt", 15, 4.7, 250, R.drawable.character_chef_2));
+        // Gộp thêm nguyên liệu người dùng đã chọn vào từ khóa tìm kiếm
+        List<String> keywords = new ArrayList<>();
+        for (String word : lowerQuery.split("[\\s,.!?]+")) {
+            if (word.length() >= 2) keywords.add(word);
+        }
+        for (String ing : currentIngredients) {
+            keywords.add(ing.toLowerCase());
         }
 
-        return suggestions;
+        for (Recipe r : firestoreRecipes) {
+            if (recipeMatchesKeywords(r, keywords)) {
+                matched.add(r);
+            }
+        }
+
+        // Sắp xếp theo đánh giá cao nhất trước
+        java.util.Collections.sort(matched, (a, b) -> Double.compare(b.getRating(), a.getRating()));
+
+        // Nếu không khớp món nào cụ thể, gợi ý các công thức có đánh giá cao nhất (vẫn là dữ liệu thật)
+        if (matched.isEmpty()) {
+            List<Recipe> fallback = new ArrayList<>(firestoreRecipes);
+            java.util.Collections.sort(fallback, (a, b) -> Double.compare(b.getRating(), a.getRating()));
+            matched = fallback;
+        }
+
+        // Giới hạn tối đa 3 gợi ý
+        if (matched.size() > 3) {
+            matched = matched.subList(0, 3);
+        }
+        return matched;
+    }
+
+    private boolean recipeMatchesKeywords(Recipe r, List<String> keywords) {
+        if (r == null || keywords.isEmpty()) return false;
+        StringBuilder haystack = new StringBuilder();
+        if (r.getName() != null) haystack.append(r.getName().toLowerCase()).append(" ");
+        if (r.getTags() != null) {
+            for (String tag : r.getTags()) {
+                if (tag != null) haystack.append(tag.toLowerCase()).append(" ");
+            }
+        }
+        if (r.getIngredients() != null) {
+            for (Ingredient ing : r.getIngredients()) {
+                if (ing != null && ing.getName() != null) {
+                    haystack.append(ing.getName().toLowerCase()).append(" ");
+                }
+            }
+        }
+        String text = haystack.toString();
+        for (String kw : keywords) {
+            if (text.contains(kw)) return true;
+        }
+        return false;
     }
 
     private LocalRecommendation runLocalRecommendationEngine(String query) {
         String lowerQuery = query.toLowerCase();
-        List<Recipe> suggestions = new ArrayList<>();
         String message;
+        boolean wantsRecipeSuggestions = true;
 
-        if (lowerQuery.contains("cà chua") || lowerQuery.contains("trứng") || lowerQuery.contains("heo") || lowerQuery.contains("thịt")) {
-            message = "Tuyệt vời! Với nguyên liệu thịt heo, cà chua hay trứng, tôi gợi ý cho bạn món Bánh Mì Thịt Nướng nóng hổi đậm đà, hoặc Gỏi Cuốn Tôm Thịt thanh mát siêu dễ làm tại nhà nhé! Bạn có thể xem chi tiết công thức ngay dưới đây:";
-            suggestions.add(new Recipe(102, "Bánh Mì Thịt Nướng", 30, 4.8, 320, R.drawable.character_chef_2));
-            suggestions.add(new Recipe(104, "Gỏi Cuốn Tôm Thịt", 15, 4.7, 250, R.drawable.character_chef_2));
+        if (lowerQuery.contains("ngày") || lowerQuery.contains("ngày mấy") || lowerQuery.contains("thứ mấy") || lowerQuery.contains("giờ") || lowerQuery.contains("mấy giờ") || lowerQuery.contains("thời gian")) {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEEE, 'ngày' dd/MM/yyyy, 'bây giờ là' HH:mm", new java.util.Locale("vi", "VN"));
+            String currentDateTime = sdf.format(new java.util.Date());
+            message = "Chào bạn! Hôm nay là " + currentDateTime + ". Hôm nay bạn muốn nấu món gì? Hãy chia sẻ nguyên liệu để tôi gợi ý món ăn phù hợp nhé!";
+        } else if (lowerQuery.contains("chào") || lowerQuery.contains("hello") || lowerQuery.contains("hi") || lowerQuery.contains("chao")) {
+            message = "Chào bạn thân yêu! Tôi là CookUp AI. Rất vui được trò chuyện cùng bạn hôm nay. Bạn muốn tìm kiếm công thức nấu ăn hay hỏi tôi bất cứ điều gì nào?";
+        } else if (lowerQuery.contains("bạn là ai") || lowerQuery.contains("tên gì") || lowerQuery.contains("ten gi") || lowerQuery.contains("là gì")) {
+            message = "Tôi là Trợ lý Ảo vạn năng CookUp! Nhiệm vụ của tôi là giúp bạn nấu ăn ngon mỗi ngày và đồng hành giải đáp mọi câu hỏi đời sống, thời gian, công việc của bạn. Hãy cứ tự nhiên hỏi nhé!";
+        } else if (lowerQuery.contains("làm gì") || lowerQuery.contains("lam gi") || lowerQuery.contains("giúp") || lowerQuery.contains("hướng dẫn") || lowerQuery.contains("tính năng")) {
+            message = "Tôi có thể giúp bạn tìm kiếm mọi công thức ẩm thực truyền thống Việt Nam, tính toán thời gian, tư vấn thực đơn và giải đáp các thắc mắc kiến thức thú vị khác. Bạn cần tôi trợ giúp gì nào?";
+        } else if (lowerQuery.contains("cà chua") || lowerQuery.contains("trứng") || lowerQuery.contains("heo") || lowerQuery.contains("thịt")) {
+            message = "Tuyệt vời! Dựa trên nguyên liệu bạn có, đây là những công thức phù hợp nhất mình tìm được cho bạn:";
         } else if (lowerQuery.contains("bò") || lowerQuery.contains("bún") || lowerQuery.contains("phở")) {
-            message = "Thật tuyệt hảo! Với nguyên liệu thịt bò, không gì sánh bằng món Phở Bò Gia Truyền nóng hổi nức tiếng Hà Nội, nước dùng ngọt lịm từ xương ống hầm sâu. Xem công thức chuẩn vị ở đây nhé:";
-            suggestions.add(new Recipe(101, "Phở Bò Gia Truyền", 120, 4.9, 450, R.drawable.character_chef_1));
+            message = "Thật tuyệt hảo! Đây là những công thức liên quan đến thịt bò mà mình tìm thấy cho bạn:";
         } else if (lowerQuery.contains("tôm") || lowerQuery.contains("bột")) {
-            message = "Ý tưởng tuyệt vời! Tôm tươi mọng nước cuốn với bánh tráng dẻo dai thành món Gỏi Cuốn tôm thịt, chấm xốt tương bơ đậu phộng ngậy bùi, hoặc đổ Bánh Xèo Miền Tây vàng giòn rụm đều ngon mê ly!";
-            suggestions.add(new Recipe(103, "Bánh Xèo Miền Tây", 45, 4.6, 380, R.drawable.character_chef_1));
-            suggestions.add(new Recipe(104, "Gỏi Cuốn Tôm Thịt", 15, 4.7, 250, R.drawable.character_chef_2));
+            message = "Ý tưởng tuyệt vời! Đây là những công thức phù hợp với nguyên liệu của bạn:";
         } else {
-            message = "Chào bạn! Để tận dụng tối đa nguyên liệu của bạn, đây là các gợi ý công thức món ăn truyền thống Việt Nam cực ngon, chuẩn vị và dễ chế biến nhất:";
-            suggestions.add(new Recipe(102, "Bánh Mì Thịt Nướng", 30, 4.8, 320, R.drawable.character_chef_2));
-            suggestions.add(new Recipe(104, "Gỏi Cuốn Tôm Thịt", 15, 4.7, 250, R.drawable.character_chef_2));
+            message = "Thật là một câu hỏi thú vị! Là trợ lý vạn năng CookUp, tôi luôn sẵn lòng giải đáp mọi thắc mắc của bạn từ cuộc sống đến bếp núc. Đây là các gợi ý công thức món ăn hôm nay:";
+        }
+
+        // Luôn lấy gợi ý công thức THẬT từ Firebase Firestore, không tạo dữ liệu giả
+        List<Recipe> suggestions = wantsRecipeSuggestions ? matchSampleRecipesForQuery(query) : new ArrayList<>();
+        if (suggestions.isEmpty() && !firestoreRecipesLoaded) {
+            message += "\n\n(Đang tải danh sách công thức, vui lòng thử lại sau giây lát nếu chưa thấy gợi ý.)";
         }
 
         return new LocalRecommendation(message, suggestions);
@@ -464,7 +588,7 @@ public class AiChatBottomSheet extends BottomSheetDialogFragment {
     private void scrollToBottom() {
         mainHandler.postDelayed(() -> {
             if (scrollAiChatMessages != null) {
-                scrollAiChatMessages.fullScroll(ScrollView.FOCUS_DOWN);
+                scrollAiChatMessages.fullScroll(View.FOCUS_DOWN);
             }
         }, 100);
     }
