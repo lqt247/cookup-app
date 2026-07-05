@@ -17,9 +17,21 @@ import java.util.List;
 
 public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapter.SearchViewHolder> {
     private final List<Recipe> items;
+    private boolean isAdminMode = false;
+    private OnItemLongClickListener longClickListener;
+
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Recipe recipe, int position);
+    }
 
     public SearchRecipeAdapter(List<Recipe> items) {
         this.items = items;
+    }
+
+    public SearchRecipeAdapter(List<Recipe> items, boolean isAdminMode, OnItemLongClickListener longClickListener) {
+        this.items = items;
+        this.isAdminMode = isAdminMode;
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -39,13 +51,13 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
         String country = item.getCountry() != null ? item.getCountry() : "Món Việt";
         holder.tvCategory.setText(country);
 
-        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty()) {
+        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty() && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(holder.itemView.getContext(), item.getImageUrl())) {
             Glide.with(holder.itemView.getContext())
                     .load(item.getImageUrl())
                     .placeholder(R.drawable.character_chef_1)
                     .error(R.drawable.character_chef_1)
                     .into(holder.imgRecipe);
-        } else if (item.getImageResId() != 0) {
+        } else if (com.example.cookup_app.utils.RecipeDataHelper.isValidDrawable(holder.itemView.getContext(), item.getImageResId())) {
             holder.imgRecipe.setImageResource(item.getImageResId());
         } else {
             holder.imgRecipe.setImageResource(R.drawable.character_chef_1);
@@ -56,6 +68,13 @@ public class SearchRecipeAdapter extends RecyclerView.Adapter<SearchRecipeAdapte
             intent.putExtra("recipe", item);
             holder.itemView.getContext().startActivity(intent);
         });
+
+        if (isAdminMode && longClickListener != null) {
+            holder.itemView.setOnLongClickListener(v -> {
+                longClickListener.onItemLongClick(item, position);
+                return true;
+            });
+        }
     }
 
     @Override
