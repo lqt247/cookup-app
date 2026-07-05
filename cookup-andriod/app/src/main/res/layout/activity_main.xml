@@ -40,26 +40,39 @@
             app:itemIconSize="24dp"
             app:itemHorizontalTranslationEnabled="false"
             app:labelVisibilityMode="labeled"
+            app:itemTextAppearanceActive="@style/BottomNavText"
+            app:itemTextAppearanceInactive="@style/BottomNavText"
             app:menu="@menu/bottom_nav_menu" />
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/fabUpload"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:contentDescription="Dang cong thuc"
-        android:src="@drawable/ic_logo_cookup"
-        app:backgroundTint="@color/orange_primary"
-        app:tint="@null"
-        app:elevation="6dp"
-        app:borderWidth="0dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:cardCornerRadius="28dp"
+        app:cardBackgroundColor="@color/orange_primary"
+        app:strokeWidth="0dp"
+        app:cardElevation="6dp"
         app:layout_constraintTop_toTopOf="@id/bottomNavContainer"
         app:layout_constraintBottom_toBottomOf="@id/bottomNavContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        android:translationY="-8dp" />
+        android:translationY="-10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_logo_cookup"
+            android:scaleType="centerCrop"
+            android:layout_margin="0dp"
+            android:contentDescription="Dang cong thuc" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- AI Chat Floating Assistant Bubble -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

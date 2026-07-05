@@ -14,11 +14,41 @@
         android:orientation="vertical"
         android:paddingBottom="120dp">
 
-        <!-- Top Toolbar -->
+        <!-- Beautiful Dedicated Header for Favorites & Collections -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sổ tay yêu thích"
+                android:textColor="@color/text_primary"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Nơi lưu giữ những món ăn ngon và các bộ sưu tập ẩm thực do chính bạn tạo ra."
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_regular"
+                android:lineSpacingMultiplier="1.2"/>
+        </LinearLayout>
+
+        <!-- Top Toolbar (Hidden on Favorites Tab) -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:paddingHorizontal="16dp">
+            android:paddingHorizontal="16dp"
+            android:visibility="gone">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnProfileBack"
@@ -61,12 +91,13 @@
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
-        <!-- Profile Header with Orange Ring & Pencil Icon -->
+        <!-- Profile Header with Orange Ring & Pencil Icon (Hidden) -->
         <FrameLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
 
             <!-- Orange Ring MaterialCardView -->
             <com.google.android.material.card.MaterialCardView
@@ -110,7 +141,7 @@
             </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
 
-        <!-- Profile Name -->
+        <!-- Profile Name (Hidden) -->
         <TextView
             android:id="@+id/tvProfileName"
             android:layout_width="wrap_content"
@@ -121,9 +152,10 @@
             android:textColor="@color/text_primary"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:fontFamily="@font/poppins_semibold"/>
+            android:fontFamily="@font/poppins_semibold"
+            android:visibility="gone"/>
 
-        <!-- Bio Description -->
+        <!-- Bio Description (Hidden) -->
         <TextView
             android:id="@+id/tvProfileBio"
             android:layout_width="match_parent"
@@ -134,9 +166,10 @@
             android:text="Yêu thích ẩm thực truyền thống Việt Nam. Thích chia sẻ công thức dễ làm tại nhà."
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
-            android:fontFamily="@font/poppins_regular"/>
+            android:fontFamily="@font/poppins_regular"
+            android:visibility="gone"/>
 
-        <!-- Stats Card -->
+        <!-- Stats Card (Hidden on Favorites tab) -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,7 +179,8 @@
             app:cardElevation="0dp"
             app:strokeWidth="1dp"
             app:strokeColor="#251A17"
-            app:cardBackgroundColor="@color/bg_card">
+            app:cardBackgroundColor="@color/bg_card"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -191,11 +225,15 @@
 
                 <!-- Col 2: Người theo dõi -->
                 <LinearLayout
+                    android:id="@+id/btnStatFollowers"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
                     <TextView
                         android:id="@+id/tvStatFollowers"
                         android:layout_width="wrap_content"
@@ -252,7 +290,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Segmented Tab Bar (Pill Selector) -->
+        <!-- Segmented Tab Bar (Pill Selector) (Hidden on Favorites tab) -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -261,7 +299,8 @@
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp"
-            app:cardBackgroundColor="@color/bg_card">
+            app:cardBackgroundColor="@color/bg_card"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -321,6 +360,7 @@
             android:scrollbars="none">
 
             <LinearLayout
+                android:id="@+id/containerCollections"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -362,120 +402,6 @@
                             android:textSize="11sp"
                             android:fontFamily="@font/poppins_semibold"/>
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Item 2: Món sáng -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-                    
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/character_chef_1"/>
-                            
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/overlay"/>
-
-                        <!-- Sun icon top left -->
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_margin="10dp"
-                            android:src="@drawable/ic_star"
-                            app:tint="@color/text_primary" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Món sáng"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/poppins_semibold"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="12 công thức"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="9sp"
-                                android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </FrameLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Item 3: Cuối tuần -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/character_chef_2"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/overlay"/>
-
-                        <!-- Icon top left -->
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_margin="10dp"
-                            android:src="@drawable/ic_food_category"
-                            app:tint="@color/text_primary" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Cuối tuần"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/poppins_semibold"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="8 công thức"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="9sp"
-                                android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </HorizontalScrollView>
@@ -844,17 +770,37 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- Logout Button -->
+        <!-- Admin Panel Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdminDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Trang Quản Lý Admin ⚙"
+            android:textColor="@color/text_primary"
+            android:backgroundTint="@color/orange_primary"
+            app:cornerRadius="12dp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <!-- Logout Button (Hidden on Favorites tab) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:layout_marginTop="24dp"
             android:layout_marginHorizontal="16dp"
             android:text="Đăng xuất"
             android:textColor="@color/text_primary"
             android:backgroundTint="@color/error"
             app:cornerRadius="12dp"
-            android:fontFamily="@font/poppins_semibold"/>
+            android:fontFamily="@font/poppins_semibold"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

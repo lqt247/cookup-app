@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_primary"
-    android:fillViewport="true"
-    android:scrollbars="none">
+    android:background="@color/bg_primary">
 
+    <!-- Main Vertical Layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="120dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <!-- Toolbar bar container -->
         <RelativeLayout
@@ -76,221 +74,312 @@
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
-        <!-- Hero Card (Promoted Recipe) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardHeroRecipe"
+        <!-- Container chính hoán đổi giữa Content và Empty State -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="420dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="28dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="0dp"
-            app:cardBackgroundColor="@color/bg_card"
-            android:clickable="true"
-            android:focusable="true">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
+            <!-- 1. Content ScrollView -->
+            <ScrollView
+                android:id="@+id/scrollHomeContent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none">
 
-                <!-- Main visual photo -->
-                <ImageView
-                    android:id="@+id/imgHero"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/character_chef_1" />
-
-                <!-- Bottom Gradient Overlay for typography readability -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/bg_gradient_card" />
-
-                <!-- Overlay content at bottom -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:paddingBottom="120dp">
 
-                    <!-- Country and Highlight chips row -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <!-- Hero Card (Promoted Recipe) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardHeroRecipe"
+                        android:layout_width="match_parent"
+                        android:layout_height="420dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="28dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp"
+                        app:cardBackgroundColor="@color/bg_card"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <!-- Main visual photo -->
+                            <ImageView
+                                android:id="@+id/imgHero"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/character_chef_1" />
+
+                            <!-- Bottom Gradient Overlay for typography readability -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_alignParentBottom="true"
+                                android:background="@drawable/bg_gradient_card" />
+
+                            <!-- Overlay content at bottom -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:orientation="vertical"
+                                android:padding="20dp">
+
+                                <!-- Country and Highlight chips row -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="12dp"
+                                    android:orientation="horizontal">
+
+                                    <!-- Món Việt Chip -->
+                                    <TextView
+                                        android:id="@+id/tvHeroCountryChip"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="28dp"
+                                        android:background="@drawable/bg_chip_selected"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="10dp"
+                                        android:text="Mon Viet"
+                                        android:textColor="#FF7238"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:layout_marginEnd="8dp" />
+
+                                    <!-- Nổi bật Chip -->
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="28dp"
+                                        android:background="@drawable/bg_segment_active"
+                                        android:gravity="center"
+                                        android:paddingHorizontal="10dp"
+                                        android:text="Noi bat"
+                                        android:textColor="#FFF1ED"
+                                        android:textSize="11sp"
+                                        android:textStyle="bold"
+                                        android:fontFamily="@font/poppins_semibold" />
+                                </LinearLayout>
+
+                                <!-- Big Title -->
+                                <TextView
+                                    android:id="@+id/tvHeroName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Pho Bo Gia Truyen"
+                                    android:textColor="#FFF1ED"
+                                    android:textSize="26sp"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="12dp" />
+
+                                <!-- Stats Row -->
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:layout_width="16dp"
+                                        android:layout_height="16dp"
+                                        android:src="@drawable/ic_time_clock"
+                                        app:tint="#FF7238" />
+
+                                    <TextView
+                                        android:id="@+id/tvHeroCookTime"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:fontFamily="@font/poppins_regular"
+                                        android:text="2 Gio"
+                                        android:textColor="#8F756C"
+                                        android:textSize="13sp"
+                                        android:layout_marginEnd="16dp" />
+
+                                    <ImageView
+                                        android:layout_width="16dp"
+                                        android:layout_height="16dp"
+                                        android:src="@drawable/ic_star"
+                                        app:tint="#FF7238" />
+
+                                    <TextView
+                                        android:id="@+id/tvHeroRating"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:fontFamily="@font/poppins_regular"
+                                        android:text="4.9"
+                                        android:textColor="#8F756C"
+                                        android:textSize="13sp"
+                                        android:layout_marginEnd="16dp" />
+
+                                    <ImageView
+                                        android:layout_width="16dp"
+                                        android:layout_height="16dp"
+                                        android:src="@drawable/ic_calories"
+                                        app:tint="#FF7238" />
+
+                                    <TextView
+                                        android:id="@+id/tvHeroCalories"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="4dp"
+                                        android:fontFamily="@font/poppins_regular"
+                                        android:text="450 kcal"
+                                        android:textColor="#8F756C"
+                                        android:textSize="13sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Section: Công thức nổi bật -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:orientation="horizontal">
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginBottom="12dp">
 
-                        <!-- Món Việt Chip -->
                         <TextView
-                            android:id="@+id/tvHeroCountryChip"
                             android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:background="@drawable/bg_chip_selected"
-                            android:gravity="center"
-                            android:paddingHorizontal="10dp"
-                            android:text="🇻🇳 Món Việt"
-                            android:textColor="#FF7238"
-                            android:textSize="11sp"
-                            android:textStyle="bold"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
                             android:fontFamily="@font/poppins_semibold"
-                            android:layout_marginEnd="8dp" />
+                            android:text="Công thức nổi bật"
+                            android:textColor="@color/text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                        <!-- Nổi bật Chip -->
                         <TextView
+                            android:id="@+id/btnViewAll"
                             android:layout_width="wrap_content"
-                            android:layout_height="28dp"
-                            android:background="@drawable/bg_segment_active"
-                            android:gravity="center"
-                            android:paddingHorizontal="10dp"
-                            android:text="🔥 Nổi bật"
-                            android:textColor="#FFF1ED"
-                            android:textSize="11sp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Xem tất cả"
+                            android:textColor="#FF7238"
+                            android:textSize="13sp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/poppins_semibold" />
-                    </LinearLayout>
+                            android:clickable="true"
+                            android:focusable="true" />
+                    </RelativeLayout>
 
-                    <!-- Big Title -->
-                    <TextView
-                        android:id="@+id/tvHeroName"
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvFeatured"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Phở Bò Gia Truyền"
-                        android:textColor="#FFF1ED"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="12dp" />
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="16dp"
+                        android:layout_marginBottom="24dp"
+                        android:scrollbars="none" />
 
-                    <!-- Stats Row -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <!-- Section: Mới nhất -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <!-- Cook Time -->
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_time_clock"
-                            app:tint="#FF7238" />
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginBottom="12dp">
 
                         <TextView
-                            android:id="@+id/tvHeroCookTime"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="2 Giờ"
-                            android:textColor="#8F756C"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Mới nhất"
+                            android:textColor="@color/text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/btnViewAllNewest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Xem tất cả"
+                            android:textColor="#FF7238"
                             android:textSize="13sp"
-                            android:layout_marginEnd="16dp" />
+                            android:textStyle="bold"
+                            android:clickable="true"
+                            android:focusable="true" />
+                    </RelativeLayout>
 
-                        <!-- Rating -->
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_star"
-                            app:tint="#FF7238" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvNewest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="16dp"
+                        android:nestedScrollingEnabled="false" />
 
-                        <TextView
-                            android:id="@+id/tvHeroRating"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="4.9 (1.2k)"
-                            android:textColor="#8F756C"
-                            android:textSize="13sp"
-                            android:layout_marginEnd="16dp" />
-
-                        <!-- Calories -->
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_calories"
-                            app:tint="#FF7238" />
-
-                        <TextView
-                            android:id="@+id/tvHeroCalories"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/poppins_regular"
-                            android:text="450 kcal"
-                            android:textColor="#8F756C"
-                            android:textSize="13sp" />
-                    </LinearLayout>
                 </LinearLayout>
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </ScrollView>
 
-        <!-- Section: Công thức nổi bật -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="12dp">
+            <!-- 2. Empty State View -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyHomeState"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="32dp"
+                android:visibility="gone">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Công thức nổi bật"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:src="@drawable/character_chef_1"
+                    android:layout_marginBottom="24dp" />
 
-            <TextView
-                android:id="@+id/btnViewAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Xem tất cả"
-                android:textColor="#FF7238"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:focusable="true" />
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chưa có công thức nào!"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginBottom="12dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFeatured"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            android:layout_marginBottom="24dp"
-            android:scrollbars="none" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gian bếp hiện đang trống trải. Hãy là người đầu tiên chia sẻ công thức nấu ăn tuyệt vời của bạn nhé! 🍳"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp" />
 
-        <!-- Section: Mới nhất -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="12dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Mới nhất"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEmptyStateUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:text="Đăng công thức ngay"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/orange_primary"
+                    app:cornerRadius="24dp"
+                    android:paddingHorizontal="24dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvNewest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            android:nestedScrollingEnabled="false" />
+            </LinearLayout>
 
+        </FrameLayout>
     </LinearLayout>
-</ScrollView>
+</FrameLayout>

@@ -37,7 +37,7 @@ public class FeaturedRecipeAdapter extends RecyclerView.Adapter<FeaturedRecipeAd
         holder.tvRating.setText(String.valueOf(item.getRating()));
         holder.tvCalories.setText(item.getCalories() + " kcal");
 
-        // Set dynamic tag
+        // Thiết lập thẻ nhãn động dựa trên dữ liệu công thức
         String tag = "Món Ngon";
         if (item.getTags() != null && !item.getTags().isEmpty()) {
             tag = item.getTags().get(0);
@@ -46,13 +46,13 @@ public class FeaturedRecipeAdapter extends RecyclerView.Adapter<FeaturedRecipeAd
         }
         holder.tvRecipeTag.setText(tag);
 
-        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty()) {
+        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty() && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(holder.itemView.getContext(), item.getImageUrl())) {
             Glide.with(holder.itemView.getContext())
                     .load(item.getImageUrl())
                     .placeholder(R.drawable.character_chef_2)
                     .error(R.drawable.character_chef_2)
                     .into(holder.imgRecipe);
-        } else if (item.getImageResId() != 0) {
+        } else if (com.example.cookup_app.utils.RecipeDataHelper.isValidDrawable(holder.itemView.getContext(), item.getImageResId())) {
             holder.imgRecipe.setImageResource(item.getImageResId());
         } else {
             holder.imgRecipe.setImageResource(R.drawable.character_chef_2);
@@ -62,6 +62,29 @@ public class FeaturedRecipeAdapter extends RecyclerView.Adapter<FeaturedRecipeAd
             android.content.Intent intent = new android.content.Intent(holder.itemView.getContext(), com.example.cookup_app.activity.RecipeDetailActivity.class);
             intent.putExtra("recipe", item);
             holder.itemView.getContext().startActivity(intent);
+        });
+
+        // Bookmark logic using Firestore collections
+        android.content.Context ctx = holder.itemView.getContext();
+        com.example.cookup_app.utils.CollectionHelper.checkIsBookmarked(ctx, item.getId(), isBookmarked -> {
+            if (isBookmarked) {
+                holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.orange_primary));
+            } else {
+                holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.text_primary));
+            }
+        });
+        
+        holder.btnBookmark.setOnClickListener(v -> {
+            com.example.cookup_app.utils.CollectionHelper.showSaveToCollectionDialog(ctx, item, () -> {
+                // Update icon after dialog closed
+                com.example.cookup_app.utils.CollectionHelper.checkIsBookmarked(ctx, item.getId(), isBookmarked -> {
+                    if (isBookmarked) {
+                        holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.orange_primary));
+                    } else {
+                        holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.text_primary));
+                    }
+                });
+            });
         });
     }
 
@@ -77,6 +100,7 @@ public class FeaturedRecipeAdapter extends RecyclerView.Adapter<FeaturedRecipeAd
         final TextView tvCalories;
         final TextView tvRecipeTag;
         final View btnBookmark;
+        final ImageView imgBookmark;
 
         FeaturedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +110,7 @@ public class FeaturedRecipeAdapter extends RecyclerView.Adapter<FeaturedRecipeAd
             tvCalories = itemView.findViewById(R.id.tvRecipeCalories);
             tvRecipeTag = itemView.findViewById(R.id.tvRecipeTag);
             btnBookmark = itemView.findViewById(R.id.btnBookmark);
+            imgBookmark = itemView.findViewById(R.id.imgBookmark);
         }
     }
 }

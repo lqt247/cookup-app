@@ -36,7 +36,7 @@ public class NewestRecipeAdapter extends RecyclerView.Adapter<NewestRecipeAdapte
         holder.tvName.setText(item.getName());
 
         String country = item.getCountry() != null ? item.getCountry() : "Món Việt";
-        // Add country flag emoji if not exists
+        // Thêm biểu tượng cờ quốc gia nếu chưa có
         if ("Việt Nam".equalsIgnoreCase(country) && !country.contains("🇻🇳")) {
             country = "🇻🇳 " + country;
         } else if ("Nhật Bản".equalsIgnoreCase(country) && !country.contains("🇯🇵")) {
@@ -48,13 +48,13 @@ public class NewestRecipeAdapter extends RecyclerView.Adapter<NewestRecipeAdapte
         holder.tvCategoryAndTime.setText(country + " • " + item.getCookTimeMinutes() + " Phút");
         holder.tvStats.setText("⭐ " + item.getRating() + "  •  " + item.getCalories() + " kcal");
 
-        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty()) {
+        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty() && com.example.cookup_app.utils.RecipeDataHelper.isUriReadable(holder.itemView.getContext(), item.getImageUrl())) {
             Glide.with(holder.itemView.getContext())
                     .load(item.getImageUrl())
                     .placeholder(R.drawable.character_chef_1)
                     .error(R.drawable.character_chef_1)
                     .into(holder.imgRecipe);
-        } else if (item.getImageResId() != 0) {
+        } else if (com.example.cookup_app.utils.RecipeDataHelper.isValidDrawable(holder.itemView.getContext(), item.getImageResId())) {
             holder.imgRecipe.setImageResource(item.getImageResId());
         } else {
             holder.imgRecipe.setImageResource(R.drawable.character_chef_1);
@@ -64,6 +64,29 @@ public class NewestRecipeAdapter extends RecyclerView.Adapter<NewestRecipeAdapte
             android.content.Intent intent = new android.content.Intent(holder.itemView.getContext(), com.example.cookup_app.activity.RecipeDetailActivity.class);
             intent.putExtra("recipe", item);
             holder.itemView.getContext().startActivity(intent);
+        });
+
+        // Bookmark logic using Firestore collections
+        android.content.Context ctx = holder.itemView.getContext();
+        com.example.cookup_app.utils.CollectionHelper.checkIsBookmarked(ctx, item.getId(), isBookmarked -> {
+            if (isBookmarked) {
+                holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.orange_primary));
+            } else {
+                holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.text_primary));
+            }
+        });
+        
+        holder.btnBookmark.setOnClickListener(v -> {
+            com.example.cookup_app.utils.CollectionHelper.showSaveToCollectionDialog(ctx, item, () -> {
+                // Update icon after dialog closed
+                com.example.cookup_app.utils.CollectionHelper.checkIsBookmarked(ctx, item.getId(), isBookmarked -> {
+                    if (isBookmarked) {
+                        holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.orange_primary));
+                    } else {
+                        holder.imgBookmark.setColorFilter(ctx.getResources().getColor(R.color.text_primary));
+                    }
+                });
+            });
         });
     }
 
@@ -78,6 +101,7 @@ public class NewestRecipeAdapter extends RecyclerView.Adapter<NewestRecipeAdapte
         final TextView tvCategoryAndTime;
         final TextView tvStats;
         final View btnBookmark;
+        final ImageView imgBookmark;
 
         NewestViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +110,7 @@ public class NewestRecipeAdapter extends RecyclerView.Adapter<NewestRecipeAdapte
             tvCategoryAndTime = itemView.findViewById(R.id.tvRecipeCategoryAndTime);
             tvStats = itemView.findViewById(R.id.tvRecipeStats);
             btnBookmark = itemView.findViewById(R.id.btnBookmark);
+            imgBookmark = itemView.findViewById(R.id.imgBookmark);
         }
     }
 }
