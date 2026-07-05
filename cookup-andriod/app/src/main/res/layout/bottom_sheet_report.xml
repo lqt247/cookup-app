@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bg_card"
+    android:padding="20dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@color/text_hint"
+        android:backgroundTint="@color/text_hint" />
+
+    <!-- Title and Subtitle -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Báo cáo công thức vi phạm"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn lý do báo cáo để giúp chúng tôi xây dựng cộng đồng tốt hơn."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Reason Options Group -->
+    <RadioGroup
+        android:id="@+id/rgReportReasons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/rbSpam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spam hoặc nội dung quảng cáo"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/orange_primary"
+            android:textSize="15sp"
+            android:padding="10dp"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/rbInappropriate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hình ảnh không phù hợp / phản cảm"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/orange_primary"
+            android:textSize="15sp"
+            android:padding="10dp"/>
+
+        <RadioButton
+            android:id="@+id/rbIncorrect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Công thức sai lệch / thông tin nguy hại"
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/orange_primary"
+            android:textSize="15sp"
+            android:padding="10dp"/>
+
+        <RadioButton
+            android:id="@+id/rbOther"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lý do khác..."
+            android:textColor="@color/text_primary"
+            android:buttonTint="@color/orange_primary"
+            android:textSize="15sp"
+            android:padding="10dp"/>
+    </RadioGroup>
+
+    <!-- Additional Details Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilReportDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:boxStrokeColor="@color/orange_primary"
+        app:hintTextColor="@color/orange_primary"
+        app:boxBackgroundColor="@color/bg_input"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:strokeWidth="1dp"
+        android:hint="Chi tiết thêm (không bắt buộc)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etReportDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:gravity="top"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:inputType="textMultiLine"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Buttons Panel -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelReport"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:text="Huỷ"
+            android:textColor="@color/text_primary"
+            app:strokeColor="@color/text_hint"
+            app:cornerRadius="12dp"
+            android:layout_marginEnd="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSubmitReport"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:text="Gửi báo cáo"
+            android:textColor="@color/text_primary"
+            app:backgroundTint="@color/orange_primary"
+            app:cornerRadius="12dp"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardSearchItem"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/bg_card"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Recipe cover background image -->
+        <ImageView
+            android:id="@+id/imgRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/character_chef_1" />
+
+        <!-- Bottom Gradient Overlay -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_gradient_card" />
+
+        <!-- Bookmark button overlay (top-right corner) -->
+        <FrameLayout
+            android:id="@+id/btnBookmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_circle_bookmark"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bookmark"
+                app:tint="#FFF1ED" />
+        </FrameLayout>
+
+        <!-- Information overlay at bottom left -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Category/Country pill -->
+            <TextView
+                android:id="@+id/tvRecipeCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#331A1310"
+                android:backgroundTint="#B31A1310"
+                android:backgroundTintMode="src_over"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:text="Việt Nam"
+                android:textColor="#FF7238"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Recipe Title -->
+            <TextView
+                android:id="@+id/tvRecipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Phở Bò Truyền Thống"
+                android:textColor="#FFF1ED"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Cook time row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/ic_time_clock"
+                    app:tint="#8F756C" />
+
+                <TextView
+                    android:id="@+id/tvRecipeTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="45 phút"
+                    android:textColor="#8F756C"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

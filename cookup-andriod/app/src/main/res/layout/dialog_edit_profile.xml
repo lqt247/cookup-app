@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#150C0A">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HỌ VÀ TÊN"
+        android:textColor="#8F756C"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginBottom="6dp"/>
+
+    <EditText
+        android:id="@+id/edtEditProfileName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_edittext_outline"
+        android:textColor="#FFF1ED"
+        android:textColorHint="#5A4A45"
+        android:paddingHorizontal="16dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginBottom="16dp"
+        android:inputType="textPersonName"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GIỚI THIỆU BẢN THÂN"
+        android:textColor="#8F756C"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginBottom="6dp"/>
+
+    <EditText
+        android:id="@+id/edtEditProfileBio"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_edittext_outline"
+        android:textColor="#FFF1ED"
+        android:textColorHint="#5A4A45"
+        android:padding="16dp"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:maxLines="4"/>
+
+</LinearLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bg_card"
+    android:padding="20dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@color/text_hint"
+        android:backgroundTint="@color/text_hint" />
+
+    <!-- Title and Subtitle -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lưu vào bộ sưu tập"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn các bộ sưu tập để lưu trữ hoặc phân loại công thức này."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Collections List Scrollable Area -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/layoutCollectionsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Empty Placeholder -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyCollections"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingVertical="32dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:src="@drawable/ic_folder"
+                    app:tint="@color/text_hint"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn chưa có bộ sưu tập nào"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tạo bộ sưu tập mới để lưu công thức."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Buttons Panel -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateNewCollection"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="Tạo bộ sưu tập mới"
+        android:textColor="@color/orange_primary"
+        app:strokeColor="@color/orange_primary"
+        app:cornerRadius="12dp"
+        android:layout_marginBottom="12dp"
+        app:icon="@drawable/ic_add"
+        app:iconTint="@color/orange_primary"
+        app:iconPadding="8dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFinishSave"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:text="Hoàn thành"
+        android:textColor="@color/text_primary"
+        app:backgroundTint="@color/orange_primary"
+        app:cornerRadius="12dp"/>
+
+</LinearLayout>

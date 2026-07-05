@@ -36,7 +36,24 @@ public class HomeRecipeAdapter extends RecyclerView.Adapter<HomeRecipeAdapter.Re
         holder.tvMeta.setText(item.getCookTimeMinutes() + " phut" + " | "
                 + item.getRating() + " | "
                 + item.getCalories() + " kcal");
-        holder.imgRecipe.setImageResource(item.getImageResId());
+        
+        if (item.getImageUrl() != null && !item.getImageUrl().trim().isEmpty()) {
+            com.bumptech.glide.Glide.with(holder.itemView.getContext())
+                    .load(item.getImageUrl())
+                    .placeholder(R.drawable.character_chef_1)
+                    .error(R.drawable.character_chef_1)
+                    .into(holder.imgRecipe);
+        } else if (item.getImageResId() != 0) {
+            holder.imgRecipe.setImageResource(item.getImageResId());
+        } else {
+            holder.imgRecipe.setImageResource(R.drawable.character_chef_1);
+        }
+
+        holder.itemView.setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(holder.itemView.getContext(), com.example.cookup_app.activity.RecipeDetailActivity.class);
+            intent.putExtra("recipe", item);
+            holder.itemView.getContext().startActivity(intent);
+        });
     }
 
     @Override

@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:orientation="vertical">
+
+    <!-- Header Toolbar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:paddingHorizontal="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnNotificationBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/bg_card"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/text_primary"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Thông báo"
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <ImageView
+                android:id="@+id/imgNotificationHeaderAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/avatar_default_unknown"/>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+    <!-- Tabs Pill (Tất cả / Chưa đọc) -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@color/bg_card">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/tabAllNotifications"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Tất cả"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:background="@drawable/bg_segment_active"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:id="@+id/tabUnreadNotifications"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Chưa đọc"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Scrollable Notification List -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/containerNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="48dp">
+
+            <!-- Card 1: Minh Anh đã thích công thức -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/notiCard1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/bg_card">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <!-- Avatar -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/notiAvatar1"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/avatar_default_female"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Thumbnail far right -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/notiThumb1"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/character_chef_1"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Text description center -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/notiAvatar1"
+                        android:layout_toStartOf="@id/notiThumb1"
+                        android:layout_marginHorizontal="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Minh Anh đã thích công thức &quot;Phở Bò Gia Truyền&quot; của bạn."
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="10 phút trước"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/poppins_regular"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 2: Công thức đã duyệt -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/notiCard2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/bg_card">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <!-- Checked Green Badge -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/notiBadge2"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp"
+                        app:cardBackgroundColor="#155E24">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="✔"
+                            android:textColor="#81C784"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Unread orange dot far right -->
+                    <View
+                        android:id="@+id/notiDot2"
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_chip_selected"
+                        android:backgroundTint="@color/orange_primary"/>
+
+                    <!-- Content center -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/notiBadge2"
+                        android:layout_toStartOf="@id/notiDot2"
+                        android:layout_marginHorizontal="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Công thức &quot;Bánh Xèo Giòn Rụm&quot; của bạn đã được duyệt thành công ✅"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="1 giờ trước"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/poppins_regular"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 3: Thanh Hà đã bình luận -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/notiCard3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/bg_card">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <!-- Avatar -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/notiAvatar3"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/avatar_default_female"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Content center -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/notiAvatar3"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thanh Hà đã bình luận: &quot;Ngon quá, mình sẽ làm thử vào cuối tuần này!&quot;"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Trên món: Gỏi cuốn tôm thịt chuẩn vị"
+                            android:textColor="@color/orange_primary"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/poppins_medium"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Hôm qua"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/poppins_regular"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 4: Gợi ý thịnh hành -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/notiCard4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/bg_card">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <!-- Hot Fire Icon Badge -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/notiBadge4"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp"
+                        app:cardBackgroundColor="#3D1D16">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="🔥"
+                            android:textSize="16sp" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Content center -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/notiBadge4"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Gợi ý thịnh hành: Khám phá các món ăn giải nhiệt mùa hè đang được yêu thích nhất."
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="2 ngày trước"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="11sp"
+                            android:fontFamily="@font/poppins_regular"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

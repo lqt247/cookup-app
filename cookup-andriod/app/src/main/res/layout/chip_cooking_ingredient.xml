@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:layout_marginEnd="8dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="#211612">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="14dp">
+
+        <!-- Left Colored Bullet Dot -->
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:background="@drawable/bg_segment_active"
+            android:backgroundTint="@color/orange_primary"/>
+
+        <!-- Ingredient & Qty text -->
+        <TextView
+            android:id="@+id/tvChipIngredientText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Dầu ăn (2 muỗng)"
+            android:textColor="@color/text_primary"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_semibold"/>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

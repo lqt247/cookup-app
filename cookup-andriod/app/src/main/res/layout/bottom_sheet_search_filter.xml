@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/bg_card"
+    android:padding="20dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="@color/text_hint"
+        android:backgroundTint="@color/text_hint" />
+
+    <!-- Title and Subtitle -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bộ lọc tìm kiếm"
+        android:textColor="@color/text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tinh chỉnh kết quả tìm kiếm theo nhu cầu dinh dưỡng và thời gian của bạn."
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Section 1: Cook Time -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thời gian nấu"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginBottom="10dp"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cgFilterTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:singleSelection="true"
+        app:selectionRequired="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTimeAll"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tất cả"
+            android:textColor="@color/text_primary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTimeShort"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhanh (Dưới 30 phút)"
+            android:textColor="@color/text_secondary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTimeMedium"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vừa (30 - 60 phút)"
+            android:textColor="@color/text_secondary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipTimeLong"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kỳ công (Trên 60 phút)"
+            android:textColor="@color/text_secondary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- Section 2: Calories -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lượng Calo (Kcal)"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginBottom="10dp"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/cgFilterCalories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:singleSelection="true"
+        app:selectionRequired="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCalAll"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tất cả"
+            android:textColor="@color/text_primary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCalLow"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ít béo (Dưới 300 Kcal)"
+            android:textColor="@color/text_secondary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCalMedium"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cân bằng (300 - 500 Kcal)"
+            android:textColor="@color/text_secondary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCalHigh"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giàu năng lượng (Trên 500 Kcal)"
+            android:textColor="@color/text_secondary"
+            app:chipBackgroundColor="@color/bg_input"
+            app:chipStrokeWidth="0dp"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- Buttons Panel -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnResetFilters"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:text="Đặt lại"
+            android:textColor="@color/text_primary"
+            app:strokeColor="@color/text_hint"
+            app:cornerRadius="12dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnApplyFilters"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:text="Áp dụng"
+            android:textColor="@color/text_primary"
+            app:backgroundTint="@color/orange_primary"
+            app:cornerRadius="12dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/poppins_semibold"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardFeatured"
+    android:layout_width="220dp"
+    android:layout_height="240dp"
+    android:layout_marginEnd="16dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/bg_card"
+    android:clickable="true"
+    android:focusable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Recipe main visual image -->
+        <ImageView
+            android:id="@+id/imgRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/character_chef_2" />
+
+        <!-- Time Tag overlay at the bottom of the image -->
+        <TextView
+            android:id="@+id/tvRecipeTag"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="116dp"
+            android:layout_marginStart="12dp"
+            android:background="#331A1310"
+            android:backgroundTint="#D91F1412"
+            android:backgroundTintMode="src_over"
+            android:gravity="center"
+            android:paddingHorizontal="10dp"
+            android:text="Dưới 30 phút"
+            android:textColor="#FF7238"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_semibold" />
+
+        <!-- Bookmark button overlay (top-right corner) -->
+        <FrameLayout
+            android:id="@+id/btnBookmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/bg_circle_bookmark"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bookmark"
+                app:tint="#FFF1ED" />
+        </FrameLayout>
+
+        <!-- Bottom details area -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/imgRecipe"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- Recipe Name -->
+            <TextView
+                android:id="@+id/tvRecipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Bánh Mì Thịt Nướng"
+                android:textColor="#FFF1ED"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Meta statistics row -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Rating -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_star"
+                        app:tint="#FF7238" />
+
+                    <TextView
+                        android:id="@+id/tvRecipeRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="4.8"
+                        android:textColor="#8F756C"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Calories -->
+                <TextView
+                    android:id="@+id/tvRecipeCalories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="320 kcal"
+                    android:textColor="#8F756C"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

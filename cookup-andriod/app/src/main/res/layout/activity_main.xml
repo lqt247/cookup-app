@@ -51,12 +51,30 @@
         android:contentDescription="Dang cong thuc"
         android:src="@drawable/ic_logo_cookup"
         app:backgroundTint="@color/orange_primary"
-        app:tint="@color/text_primary"
+        app:tint="@null"
+        app:elevation="6dp"
+        app:borderWidth="0dp"
         app:layout_constraintTop_toTopOf="@id/bottomNavContainer"
         app:layout_constraintBottom_toBottomOf="@id/bottomNavContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.5"
         android:translationY="-8dp" />
+
+    <!-- AI Chat Floating Assistant Bubble -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAiChat"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="96dp"
+        android:contentDescription="Tro ly AI"
+        android:src="@drawable/ic_ai_chat"
+        app:backgroundTint="@color/orange_primary"
+        app:tint="@null"
+        app:elevation="6dp"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

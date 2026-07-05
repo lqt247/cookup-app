@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_primary"
+    android:paddingTop="12dp">
+
+    <!-- Bottom Sheet Drag Handle -->
+    <View
+        android:layout_width="48dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:background="#3A2D2A" />
+
+    <!-- Header Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="12dp">
+
+        <!-- Robot Chef Avatar on Left -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layoutAiHeaderAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="#211714">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/character_chef_1"
+                android:scaleType="centerCrop"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Title & Subtitle -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/layoutAiHeaderAvatar"
+            android:layout_toStartOf="@+id/btnAiChatClose"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trợ lý nấu ăn AI"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Cho tôi biết bạn có gì trong tủ lạnh!"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+
+        <!-- Close Button (X) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnAiChatClose"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/bg_card"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_close"
+                app:tint="@color/text_primary"/>
+        </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
+
+    <!-- Divider Line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1C1411" />
+
+    <!-- Chat Bubbles & Conversation Area -->
+    <ScrollView
+        android:id="@+id/scrollAiChatMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/containerAiChatMessages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp" />
+    </ScrollView>
+
+    <!-- Bottom Configuration: Ingredient Tag Chips & Input Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#150C09"
+        android:paddingTop="8dp"
+        android:paddingBottom="16dp"
+        android:paddingHorizontal="16dp">
+
+        <!-- Ingredient Chips Row (Horizontal Scrollable) -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:id="@+id/containerAiIngredientChips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="4dp" />
+        </HorizontalScrollView>
+
+        <!-- Input Box with Add Plus and Send Button -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_edittext_outline"
+            android:backgroundTint="@color/bg_input"
+            android:paddingHorizontal="6dp">
+
+            <!-- Plus / Add icon for quick entry if needed -->
+            <ImageView
+                android:id="@+id/btnAiAddIngredientDirect"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_add"
+                app:tint="@color/text_secondary"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <!-- Typing Field -->
+            <EditText
+                android:id="@+id/edtAiChatInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/btnAiAddIngredientDirect"
+                android:layout_toStartOf="@+id/btnAiChatSend"
+                android:layout_marginHorizontal="10dp"
+                android:background="@android:color/transparent"
+                android:hint="Nhập thêm nguyên liệu..."
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:maxLines="2"
+                android:imeOptions="actionSend"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <!-- Send button (orange circle) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnAiChatSend"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/orange_primary"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_send"
+                    app:tint="@android:color/white"/>
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
