@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="120dp">
+
+            <!-- Hero Section with Header Image & Overlay -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="320dp">
+
+                <ImageView
+                    android:id="@+id/imgRecipeBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/character_chef_1"/>
+
+                <!-- Gradient Overlay -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/bg_gradient_card" />
+
+                <!-- Action Toolbar Buttons over image -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="16dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btnDetailBack"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="4dp"
+                        app:strokeWidth="0dp"
+                        app:cardBackgroundColor="#CC1E1410"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_arrow_back"
+                            app:tint="@color/text_primary"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
+
+                        <!-- Edit Button (Visible only to owner) -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnDetailEdit"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            android:visibility="gone"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp"
+                            app:strokeWidth="0dp"
+                            app:cardBackgroundColor="#CC1E1410"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_pencil"
+                                app:tint="@color/text_primary"/>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Share Button -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnDetailShare"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp"
+                            app:strokeWidth="0dp"
+                            app:cardBackgroundColor="#CC1E1410"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_share"
+                                app:tint="@color/text_primary"/>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Bookmark Button -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnDetailBookmark"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp"
+                            app:strokeWidth="0dp"
+                            app:cardBackgroundColor="#CC1E1410"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:id="@+id/imgDetailBookmark"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_bookmark"
+                                app:tint="@color/text_primary"/>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Report Button -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/btnDetailReport"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="4dp"
+                            app:strokeWidth="0dp"
+                            app:cardBackgroundColor="#CC1E1410"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_flag"
+                                app:tint="@color/text_primary"/>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- Content Area -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="-24dp">
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/tvDetailTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bún Bò Huế Cung Đình"
+                    android:textColor="@color/text_primary"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_bold" />
+
+                <!-- Chef Author Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="12dp">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        app:cardCornerRadius="21dp"
+                        app:strokeWidth="0dp"
+                        app:cardElevation="0dp">
+                        <ImageView
+                            android:id="@+id/imgChefAvatar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/avatar_default_male"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvChefName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bởi Chef Minh Tuấn"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins_semibold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chuyên gia ẩm thực truyền thống"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/poppins_regular"/>
+                    </LinearLayout>
+
+                    <!-- Follow Chef Button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnFollowChef"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="36dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Theo dõi"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="18dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#FF7238"
+                        app:backgroundTint="#160E0C"
+                        android:textColor="#FF7238"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="0dp"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <!-- Description -->
+                <TextView
+                    android:id="@+id/tvDetailDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Món bún bò huế đậm đà chuẩn vị cố đô, thơm mùi sả mắm ruốc..."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"
+                    android:lineSpacingMultiplier="1.2"
+                    android:fontFamily="@font/poppins_regular"/>
+
+                <!-- Meta Statistics Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/bg_card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="12dp">
+
+                        <!-- Rating -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:src="@drawable/ic_star"
+                                    app:tint="@color/orange_primary"/>
+                                <TextView
+                                    android:id="@+id/tvDetailRating"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text="0.0"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_semibold"/>
+                            </LinearLayout>
+                            <TextView
+                                android:id="@+id/tvDetailReviewsCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="0 Đánh giá"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/poppins_regular"/>
+                        </LinearLayout>
+
+                        <!-- Vertical Divider -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="#33FFFFFF"/>
+
+                        <!-- Time -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:src="@drawable/ic_time_clock"
+                                    app:tint="@color/orange_primary"/>
+                                <TextView
+                                    android:id="@+id/tvDetailTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text="120 Phút"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_semibold"/>
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Thời gian nấu"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/poppins_regular"/>
+                        </LinearLayout>
+
+                        <!-- Vertical Divider -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="32dp"
+                            android:background="#33FFFFFF"/>
+
+                        <!-- Calories -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:src="@drawable/ic_calories"
+                                    app:tint="@color/orange_primary"/>
+                                <TextView
+                                    android:id="@+id/tvDetailCalories"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:text="450 kcal"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="14sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_semibold"/>
+                            </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Năng lượng"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp"
+                                android:fontFamily="@font/poppins_regular"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Sub Tab switcher (Nguyên liệu / Các bước / Đánh giá) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:cardBackgroundColor="@color/bg_card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:orientation="horizontal"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/tabDetailIngredients"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Nguyên liệu"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:background="@drawable/bg_segment_active"
+                            android:clickable="true"
+                            android:focusable="true"/>
+
+                        <TextView
+                            android:id="@+id/tabDetailSteps"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Các bước"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:focusable="true"/>
+
+                        <TextView
+                            android:id="@+id/tabDetailReviews"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Đánh giá"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:background="@android:color/transparent"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Dynamic Sub-Tab Content Layouts -->
+                <LinearLayout
+                    android:id="@+id/layoutTabIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <!-- Portion Counter Row -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp"
+                        app:cardBackgroundColor="@color/bg_card">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:paddingHorizontal="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="Phần ăn"
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins_semibold"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnPortionMinus"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:text="−"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:backgroundTint="#2D221D"
+                                    android:insetLeft="0dp"
+                                    android:insetTop="0dp"
+                                    android:insetRight="0dp"
+                                    android:insetBottom="0dp"
+                                    app:cornerRadius="18dp"
+                                    android:padding="0dp"/>
+
+                                <TextView
+                                    android:id="@+id/tvPortionCount"
+                                    android:layout_width="32dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="4"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="@font/poppins_bold"/>
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/btnPortionPlus"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:text="+"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    app:backgroundTint="#2D221D"
+                                    android:insetLeft="0dp"
+                                    android:insetTop="0dp"
+                                    android:insetRight="0dp"
+                                    android:insetBottom="0dp"
+                                    app:cornerRadius="18dp"
+                                    android:padding="0dp"/>
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Ingredients ListView/Container -->
+                    <LinearLayout
+                        android:id="@+id/containerDetailIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="12dp">
+                        <!-- Populated programmatically -->
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutTabSteps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/containerDetailSteps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- Populated programmatically -->
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutTabReviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginTop="16dp">
+
+                    <!-- Dynamic Write Review Section -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardWriteReview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/orange_primary"
+                        app:cardBackgroundColor="@color/bg_card">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Đánh giá công thức này"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/poppins_semibold"/>
+
+                            <!-- Star Ratings clickable -->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+                                <ImageView
+                                    android:id="@+id/imgStar1"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar2"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar3"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar4"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:layout_marginEnd="6dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                                <ImageView
+                                    android:id="@+id/imgStar5"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:src="@drawable/ic_star"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    app:tint="@color/text_secondary"/>
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edtReviewComment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:hint="Chia sẻ trải nghiệm nấu nướng của bạn..."
+                                android:textColorHint="@color/text_secondary"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:background="@android:color/transparent"
+                                android:maxLines="4"
+                                android:inputType="textMultiLine"
+                                android:fontFamily="@font/poppins_regular"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#251A17"
+                                android:layout_marginTop="8dp"/>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnSubmitReview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end"
+                                android:layout_marginTop="12dp"
+                                android:text="Gửi đánh giá"
+                                android:textColor="@color/text_primary"
+                                android:backgroundTint="@color/orange_primary"
+                                app:cornerRadius="8dp"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/poppins_semibold"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Dynamic reviews list container -->
+                    <LinearLayout
+                        android:id="@+id/containerReviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- Populated programmatically -->
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Bar (Floating Cart and Big Orange Button) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#DD110B08"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="12dp">
+
+        <!-- Add to Shopping List Cart button -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnAddToCart"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            app:cardCornerRadius="27dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#33FFFFFF"
+            app:cardBackgroundColor="#211612"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_shopping_cart"
+                app:tint="@color/text_primary"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Start Cooking Orange Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnStartCooking"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="54dp"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:text="Bắt đầu nấu ăn"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/orange_primary"
+            app:cornerRadius="27dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:paddingVertical="0dp"
+            android:gravity="center"
+            app:elevation="4dp"/>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

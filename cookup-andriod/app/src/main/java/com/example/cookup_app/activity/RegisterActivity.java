@@ -29,6 +29,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -160,6 +163,24 @@ public class RegisterActivity extends AppCompatActivity {
                                     .build();
 
                             user.updateProfile(profileUpdate).addOnCompleteListener(profileTask -> {
+                                // Save profile and role to Firestore
+                                Map<String, Object> userData = new HashMap<>();
+                                userData.put("uid", user.getUid());
+                                userData.put("name", fullName);
+                                userData.put("displayName", fullName);
+                                userData.put("email", email);
+                                if ("lequangtruong2472005@gmail.com".equalsIgnoreCase(email)) {
+                                    userData.put("role", "admin");
+                                } else {
+                                    userData.put("role", "user");
+                                }
+
+                                FirebaseFirestore.getInstance().collection("users")
+                                        .document(user.getUid())
+                                        .set(userData)
+                                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "User profile and role saved!"))
+                                        .addOnFailureListener(e -> Log.e("Firestore", "Failed to save profile!", e));
+
                                 // 2. Tiến hành gửi mail xác thực
                                 user.sendEmailVerification()
                                         .addOnCompleteListener(verifyTask -> {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="end"
+    android:paddingVertical="6dp"
+    android:paddingHorizontal="4dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@color/bg_input">
+
+        <TextView
+            android:id="@+id/tvUserMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="280dp"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="10dp"
+            android:text="Tôi có thịt heo, cà chua và trứng."
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_regular" />
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

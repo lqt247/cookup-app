@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="18dp"
+    android:orientation="horizontal">
+
+    <!-- Big step number -->
+    <TextView
+        android:id="@+id/tvStepNumber"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="#FF7238"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Step content -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+
+        <!-- Step instruction input -->
+        <EditText
+            android:id="@+id/edtStepInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="80dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_edittext_outline"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="top|start"
+            android:hint="Thái thịt bò mỏng, ướp với chút muối, tiêu và tỏi băm trong 15 phút..."
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:textColor="#FFF1ED"
+            android:textColorHint="#5A4A45"
+            android:textSize="13sp" />
+
+        <!-- Row with image picker and delete action -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Step photo picker dashed square -->
+            <FrameLayout
+                android:id="@+id/boxStepImage"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/bg_dashed_border"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/imgStepPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    android:contentDescription="Xem trước bước" />
+
+                <ImageView
+                    android:id="@+id/imgStepCameraIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_camera_add"
+                    app:tint="#8F756C" />
+            </FrameLayout>
+
+            <!-- Step duration container -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/boxStepImage"
+                android:layout_toStartOf="@+id/btnDeleteStep"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="8dp"
+                android:background="@drawable/bg_edittext_outline">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_time_clock"
+                    app:tint="#8F756C" />
+
+                <EditText
+                    android:id="@+id/edtStepDuration"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@null"
+                    android:hint="Phút"
+                    android:textColorHint="#5A4A45"
+                    android:textColor="#FFF1ED"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="phút"
+                    android:textColor="#8F756C"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_regular" />
+            </LinearLayout>
+
+            <!-- Step deletion button aligned to the right -->
+            <ImageView
+                android:id="@+id/btnDeleteStep"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Xóa bước"
+                android:padding="10dp"
+                android:src="@drawable/ic_delete"
+                app:tint="#8F756C" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

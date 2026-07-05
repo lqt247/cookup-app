@@ -4,6 +4,7 @@
 
     <!-- Quyền truy cập internet — BẮT BUỘC để gọi API -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -49,6 +50,30 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.VerifyEmailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AddRecipeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.NotificationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.RecipeDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.CookingModeActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AdminActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AdminReportsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AdminUsersActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AllRecipesActivity"
             android:screenOrientation="portrait"/>
 
     </application>

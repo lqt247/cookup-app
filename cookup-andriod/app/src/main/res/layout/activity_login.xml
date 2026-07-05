@@ -148,9 +148,10 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="14dp"
             android:text="Đăng nhập"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginTop="24dp"
             app:backgroundTint="@color/orange_primary"
@@ -160,8 +161,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:paddingTop="0dp"
-            android:paddingBottom="0dp"/>
+            android:includeFontPadding="true"/>
 
         <!-- DIVIDER "hoặc" -->
         <View

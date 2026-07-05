@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/notiCardContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/bg_card">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Avatar / Left Icon -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notiAvatarContainer"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp">
+            <ImageView
+                android:id="@+id/imgNotiAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/avatar_default_unknown"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Unread Orange Dot far right -->
+        <View
+            android:id="@+id/viewNotiDot"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_chip_selected"
+            android:backgroundTint="@color/orange_primary"
+            android:visibility="gone"/>
+
+        <!-- Recipe Thumbnail on far right (if present) -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/notiThumbContainer"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_toStartOf="@id/viewNotiDot"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/imgNotiThumb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/character_chef_1"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Content Center -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/notiAvatarContainer"
+            android:layout_toStartOf="@id/notiThumbContainer"
+            android:layout_marginHorizontal="12dp"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNotiBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông báo mới từ CookUp"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <TextView
+                android:id="@+id/tvNotiTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Vừa xong"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

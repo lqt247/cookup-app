@@ -6,7 +6,7 @@
     android:layout_height="56dp"
     app:cardCornerRadius="28dp"
     app:cardElevation="6dp"
-    app:cardBackgroundColor="@color/transparent">
+    app:cardBackgroundColor="@android:color/transparent">
 
     <ImageView
         android:id="@+id/imgAvatar"

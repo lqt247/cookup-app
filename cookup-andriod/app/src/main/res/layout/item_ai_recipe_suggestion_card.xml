@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="190dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="10dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#301E1A"
+    app:cardBackgroundColor="@color/bg_card">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Image Container with Overlaid Match Badge -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:id="@+id/imgAiRecipeSuggestion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/character_chef_1"
+                android:scaleType="centerCrop"/>
+
+            <!-- Transparent Overlay -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#20000000"/>
+
+            <!-- Match Rating Badge Pill -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="top|start"
+                app:cardCornerRadius="11dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="#CCFF7238">
+
+                <TextView
+                    android:id="@+id/tvAiRecipeSuggestionMatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:text="Phù hợp 95%"
+                    android:textColor="@android:color/white"
+                    android:textSize="9dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_semibold"/>
+            </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
+
+        <!-- Details Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvAiRecipeSuggestionName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thịt heo xào cà chua"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <TextView
+                android:id="@+id/tvAiRecipeSuggestionInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Đơn giản • 20 phút"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_regular"/>
+
+            <TextView
+                android:id="@+id/btnAiRecipeSuggestionView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Xem công thức ➔"
+                android:textColor="@color/orange_primary"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_semibold"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/bg_card"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Recipe Image Container -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardReportedRecipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:cardCornerRadius="16dp"
+            app:strokeWidth="0dp"
+            app:cardElevation="0dp"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:id="@+id/imgReportedRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/character_chef_1" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Title and Report Badge Section -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/tvReportedRecipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/cardReportCountBadge"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Salad detox thanh lọc"
+                android:textColor="@color/text_primary"
+                android:textSize="19sp"
+                android:textStyle="bold" />
+
+            <!-- Report Count Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardReportCountBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="10dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="#55D32F2F"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/tvReportCountText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"
+                    android:text="1 lần báo cáo"
+                    android:textColor="#FFCDD2"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+        <!-- Author / Chef Name -->
+        <TextView
+            android:id="@+id/tvReportedRecipeAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bởi: Chef Minh"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Reason Chips Container -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgReportReasons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
+
+            <!-- Dynamic or hardcoded sample reason chips -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipReason"
+                style="@style/Widget.MaterialComponents.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spam"
+                android:textColor="@color/text_primary"
+                app:chipBackgroundColor="@color/bg_elevated"
+                app:chipStrokeWidth="0dp"
+                android:clickable="false"
+                android:focusable="false"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Details and Reporter Info (Expansion / More details) -->
+        <LinearLayout
+            android:id="@+id/layoutReportDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/bg_input"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvReporterEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Người báo cáo: user@example.com"
+                android:textColor="@color/orange_light"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvReportDetailComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Chi tiết: Hướng dẫn công thức bị thiếu nguyên liệu làm sốt và hình ảnh không liên quan."
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Action Buttons Layout - FIXED text cutting -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!-- Xoá công thức Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDeleteRecipe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:minHeight="48dp"
+                android:text="Xoá công thức"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/poppins_semibold"
+                app:backgroundTint="#D32F2F"
+                app:cornerRadius="12dp" />
+
+            <!-- Bỏ qua Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDismissReport"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:minHeight="48dp"
+                android:text="Bỏ qua"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/poppins_semibold"
+                app:backgroundTint="#1B1210"
+                app:strokeColor="@color/text_hint"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

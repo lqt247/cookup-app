@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_primary"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="32dp">
+
+        <!-- Header Section -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:paddingHorizontal="16dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/btnAdminBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:cardBackgroundColor="@color/bg_card"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="@color/text_primary"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/btnAdminBack"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="14dp"
+                android:text="CookUp Admin"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/orange_primary"
+                app:cardBackgroundColor="@color/bg_card">
+                <ImageView
+                    android:id="@+id/imgAdminAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/avatar_default_male"
+                    android:scaleType="centerCrop"/>
+            </com.google.android.material.card.MaterialCardView>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1E1411" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:layout_marginTop="16dp">
+            <TextView
+                android:id="@+id/tvAdminGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xin chào, Admin 👋"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:fontFamily="@font/poppins_semibold"/>
+            <TextView
+                android:id="@+id/tvAdminDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Cập nhật hệ thống"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_regular"/>
+        </LinearLayout>
+
+        <!-- Stats Grid -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="16dp"
+            android:columnCount="2">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatUsers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/bg_card"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_person" app:tint="@color/orange_primary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Thành viên" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="bottom">
+                        <TextView android:id="@+id/tvStatUsersCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
+                        <TextView android:id="@+id/tvStatUsersTrend" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:layout_marginBottom="2dp" android:text="" android:textSize="10sp" android:paddingHorizontal="4dp" android:paddingVertical="1dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatRecipes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/bg_card"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_food_category" app:tint="@color/orange_primary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Công thức" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="bottom">
+                        <TextView android:id="@+id/tvStatRecipesCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
+                        <TextView android:id="@+id/tvStatRecipesTrend" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:layout_marginBottom="2dp" android:text="" android:textSize="10sp" android:paddingHorizontal="4dp" android:paddingVertical="1dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatReports"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/bg_card"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_flag" app:tint="#F44336"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Báo cáo" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <TextView android:id="@+id/tvStatReportsCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardStatBlogs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/bg_card"
+                android:clickable="true"
+                android:focusable="true">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_pencil" app:tint="@color/orange_primary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Bài viết" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <TextView android:id="@+id/tvStatBlogsCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </GridLayout>
+
+        <!-- Chart -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/bg_card">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hoạt động trong tuần" android:textColor="@color/text_primary" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="100dp" android:layout_marginTop="12dp" android:gravity="bottom" android:orientation="horizontal" android:weightSum="7">
+                    <View android:id="@+id/barT2" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT3" android:layout_width="0dp" android:layout_height="70dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT4" android:layout_width="0dp" android:layout_height="50dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT5" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1" android:layout_margin="4dp" android:background="@color/orange_primary"/>
+                    <View android:id="@+id/barT6" android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT7" android:layout_width="0dp" android:layout_height="30dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barCN" android:layout_width="0dp" android:layout_height="45dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Recent Activities -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="Hoạt động gần đây"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/bg_card">
+            <LinearLayout
+                android:id="@+id/layoutRecentActivitiesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom Actions - Fixed text cutting by removing fixed height and adding padding -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdminViewReports"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="6dp"
+                android:minHeight="54dp"
+                android:text="Xem báo cáo 📋"
+                android:textColor="@color/text_primary"
+                android:backgroundTint="#8C251C"
+                app:cornerRadius="12dp"
+                android:textSize="12sp"
+                android:paddingVertical="12dp"
+                android:fontFamily="@font/poppins_semibold"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdminManageUsers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="6dp"
+                android:minHeight="54dp"
+                android:text="Quản lý user 👥"
+                android:textColor="@color/text_primary"
+                android:backgroundTint="@color/bg_elevated"
+                app:cornerRadius="12dp"
+                android:textSize="12sp"
+                android:paddingVertical="12dp"
+                android:fontFamily="@font/poppins_semibold"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdminPublishBlog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="16dp"
+            android:minHeight="54dp"
+            android:text="Đăng bài viết Blog mới ✍"
+            android:textColor="@color/text_primary"
+            android:backgroundTint="@color/orange_primary"
+            app:cornerRadius="12dp"
+            android:textSize="14sp"
+            android:paddingVertical="12dp"
+            android:fontFamily="@font/poppins_semibold"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/bg_card">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- User Info (Avatar & Name) -->
+            <LinearLayout
+                android:id="@+id/layoutReviewUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/tvReviewStars">
+
+                <ImageView
+                    android:id="@+id/imgReviewAvatar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/avatar_default_unknown"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tvReviewUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Người dùng"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_semibold"/>
+            </LinearLayout>
+
+            <!-- Star Rating -->
+            <TextView
+                android:id="@+id/tvReviewStars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="⭐⭐⭐⭐⭐ 5.0"
+                android:textColor="@color/orange_primary"
+                android:textSize="12sp"
+                android:fontFamily="@font/poppins_semibold"/>
+        </RelativeLayout>
+
+        <!-- Review Comment -->
+        <TextView
+            android:id="@+id/tvReviewComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Món ăn rất ngon và dễ chế biến theo hướng dẫn!"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"/>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

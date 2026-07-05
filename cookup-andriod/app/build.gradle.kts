@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -16,7 +17,13 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
+        debug {
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -54,10 +61,16 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore")
 //        // Thêm thư viện Firebase App Check Play Integrity và Debug
 //    implementation("com.google.firebase:firebase-appcheck-playintegrity")
 //    implementation("com.google.firebase:firebase-appcheck-debug")
 
     // Google Sign In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+}
+
+secrets {
+    propertiesFileName = ".env"
+    defaultPropertiesFileName = ".env.example"
 }
