@@ -30,7 +30,7 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="50dp"
                 android:src="@android:drawable/ic_dialog_email"
-                android:tint="@color/orange_primary"/>
+                app:tint="@color/orange_primary"/>
 
             <!-- Title -->
             <TextView

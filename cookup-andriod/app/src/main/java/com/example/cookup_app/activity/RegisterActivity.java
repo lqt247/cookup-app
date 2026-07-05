@@ -166,6 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 // Save profile and role to Firestore
                                 Map<String, Object> userData = new HashMap<>();
                                 userData.put("uid", user.getUid());
+                                userData.put("name", fullName);
                                 userData.put("displayName", fullName);
                                 userData.put("email", email);
                                 if ("lequangtruong2472005@gmail.com".equalsIgnoreCase(email)) {

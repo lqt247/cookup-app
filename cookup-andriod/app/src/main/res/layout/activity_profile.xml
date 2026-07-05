@@ -136,6 +136,22 @@
             android:textSize="13sp"
             android:fontFamily="@font/poppins_regular"/>
 
+        <!-- Follow/Unfollow Button (Only shown when viewing other user profiles) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnProfileFollow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:text="Theo dõi"
+            android:textColor="@color/text_primary"
+            android:backgroundTint="@color/orange_primary"
+            app:cornerRadius="20dp"
+            android:visibility="gone"
+            android:fontFamily="@font/poppins_semibold"
+            app:icon="@drawable/ic_add"
+            app:iconTint="@color/text_primary"/>
+
         <!-- Stats Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -166,7 +182,7 @@
                         android:id="@+id/tvStatRecipesCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="42"
+                        android:text="0"
                         android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -191,16 +207,20 @@
 
                 <!-- Col 2: Người theo dõi -->
                 <LinearLayout
+                    android:id="@+id/btnStatFollowers"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground">
                     <TextView
                         android:id="@+id/tvStatFollowers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.2k"
+                        android:text="0"
                         android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -234,7 +254,7 @@
                         android:id="@+id/tvStatFavoritesCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="356"
+                        android:text="0"
                         android:textColor="#FF7238"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -321,6 +341,7 @@
             android:scrollbars="none">
 
             <LinearLayout
+                android:id="@+id/containerProfileCollections"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -338,20 +359,20 @@
                     app:cardBackgroundColor="@color/bg_card"
                     android:clickable="true"
                     android:focusable="true">
-                    
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:padding="12dp">
-                        
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_add"
                             app:tint="#FF7238"/>
-                            
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -362,120 +383,6 @@
                             android:textSize="11sp"
                             android:fontFamily="@font/poppins_semibold"/>
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Item 2: Món sáng -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-                    
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/character_chef_1"/>
-                            
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/overlay"/>
-
-                        <!-- Sun icon top left -->
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_margin="10dp"
-                            android:src="@drawable/ic_star"
-                            app:tint="@color/text_primary" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Món sáng"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/poppins_semibold"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="12 công thức"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="9sp"
-                                android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </FrameLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <!-- Item 3: Cuối tuần -->
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="12dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeWidth="0dp">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/character_chef_2"/>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/overlay"/>
-
-                        <!-- Icon top left -->
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_margin="10dp"
-                            android:src="@drawable/ic_food_category"
-                            app:tint="@color/text_primary" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Cuối tuần"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/poppins_semibold"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="8 công thức"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="9sp"
-                                android:fontFamily="@font/poppins_regular"/>
-                        </LinearLayout>
-                    </FrameLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </HorizontalScrollView>
@@ -687,168 +594,14 @@
             </com.google.android.material.card.MaterialCardView>
         </GridLayout>
 
-        <!-- DEMO: CÔNG THỨC CỦA TÔI (List) Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginHorizontal="16dp"
-            android:text="Demo: Công thức của tôi (List)"
-            android:textColor="@color/text_primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/poppins_semibold"/>
-
-        <!-- Container for recipe list with statuses -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="16dp"
-            android:orientation="vertical">
-
-            <!-- Item 1: Phở bò Nam Định (Đã duyệt) -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp"
-                app:cardBackgroundColor="@color/bg_card">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:strokeWidth="0dp">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/character_chef_1"/>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="12dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Phở bò Nam Định"
-                            android:textColor="@color/text_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins_semibold"/>
-
-                        <!-- Đã duyệt Badge Pill -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="22dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_chip_selected"
-                            android:backgroundTint="#155E24"
-                            android:gravity="center"
-                            android:paddingHorizontal="8dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="✔ ĐÃ DUYỆT"
-                                android:textColor="#81C784"
-                                android:textSize="9sp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/poppins_semibold"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Item 2: Nem rán Hà Nội (Chờ duyệt) -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp"
-                app:cardBackgroundColor="@color/bg_card">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardCornerRadius="10dp"
-                        app:cardElevation="0dp"
-                        app:strokeWidth="0dp">
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/character_chef_2"/>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="12dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nem rán Hà Nội"
-                            android:textColor="@color/text_primary"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/poppins_semibold"/>
-
-                        <!-- Chờ duyệt Badge Pill -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="22dp"
-                            android:layout_marginTop="4dp"
-                            android:background="@drawable/bg_chip_selected"
-                            android:backgroundTint="#B35C00"
-                            android:gravity="center"
-                            android:paddingHorizontal="8dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="⏰ CHỜ DUYỆT"
-                                android:textColor="#FFB74D"
-                                android:textSize="9sp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/poppins_semibold"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-
         <!-- Admin Panel Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAdminDashboard"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:layout_marginTop="24dp"
             android:layout_marginHorizontal="16dp"
             android:text="Trang Quản Lý Admin ⚙"
@@ -861,7 +614,10 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:layout_marginTop="24dp"
             android:layout_marginHorizontal="16dp"
             android:text="Đăng xuất"
