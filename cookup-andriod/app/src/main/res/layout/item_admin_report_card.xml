@@ -21,6 +21,7 @@
 
         <!-- Recipe Image Container -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardReportedRecipeImage"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             app:cardCornerRadius="16dp"
@@ -101,14 +102,13 @@
             <!-- Dynamic or hardcoded sample reason chips -->
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipReason"
-                style="@style/Widget.Material3.Chip.Suggestion"
+                style="@style/Widget.MaterialComponents.Chip.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Spam"
                 android:textColor="@color/text_primary"
                 app:chipBackgroundColor="@color/bg_elevated"
                 app:chipStrokeWidth="0dp"
-                app:chipCornerRadius="12dp"
                 android:clickable="false"
                 android:focusable="false"/>
         </com.google.android.material.chip.ChipGroup>
@@ -143,7 +143,7 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <!-- Action Buttons Layout -->
+        <!-- Action Buttons Layout - FIXED text cutting -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,15 +154,17 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDeleteRecipe"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="6dp"
+                android:minHeight="48dp"
                 android:text="Xoá công thức"
                 android:textAllCaps="false"
-                android:textColor="#521A13"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:backgroundTint="#FFC5BC"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/poppins_semibold"
+                app:backgroundTint="#D32F2F"
                 app:cornerRadius="12dp" />
 
             <!-- Bỏ qua Button -->
@@ -170,14 +172,16 @@
                 android:id="@+id/btnDismissReport"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:minHeight="48dp"
                 android:text="Bỏ qua"
                 android:textAllCaps="false"
                 android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:textSize="13sp"
+                android:paddingVertical="8dp"
+                android:fontFamily="@font/poppins_semibold"
                 app:backgroundTint="#1B1210"
                 app:strokeColor="@color/text_hint"
                 app:cornerRadius="12dp" />

@@ -14,13 +14,12 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
-        <!-- Header Section: Hamburger + Title + Profile Avatar -->
+        <!-- Header Section -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:paddingHorizontal="16dp">
 
-            <!-- Hamburger Icon (Simulated with MaterialCard) -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/btnAdminBack"
                 android:layout_width="40dp"
@@ -41,7 +40,6 @@
                     app:tint="@color/text_primary"/>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Dashboard Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,10 +49,8 @@
                 android:text="CookUp Admin"
                 android:textColor="@color/text_primary"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:fontFamily="@font/poppins_semibold"/>
 
-            <!-- Admin Profile Avatar on Far Right -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -66,6 +62,7 @@
                 app:strokeColor="@color/orange_primary"
                 app:cardBackgroundColor="@color/bg_card">
                 <ImageView
+                    android:id="@+id/imgAdminAvatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/avatar_default_male"
@@ -73,20 +70,17 @@
             </com.google.android.material.card.MaterialCardView>
         </RelativeLayout>
 
-        <!-- Divider Line -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#1E1411" />
 
-        <!-- Welcome Banner Area -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="16dp"
             android:layout_marginTop="16dp">
-
             <TextView
                 android:id="@+id/tvAdminGreeting"
                 android:layout_width="wrap_content"
@@ -94,30 +88,26 @@
                 android:text="Xin chào, Admin 👋"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp"
-                android:textStyle="bold"
                 android:fontFamily="@font/poppins_semibold"/>
-
             <TextView
                 android:id="@+id/tvAdminDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Thứ Năm, 24 Tháng 10, 2023"
+                android:text="Cập nhật hệ thống"
                 android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_regular"/>
         </LinearLayout>
 
-        <!-- 4 Statistics Cards Grid -->
+        <!-- Stats Grid -->
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="16dp"
-            android:columnCount="2"
-            android:rowCount="2">
+            android:columnCount="2">
 
-            <!-- Card 1: Tổng người dùng -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardStatUsers"
                 android:layout_width="0dp"
@@ -126,64 +116,19 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#251A17"
                 app:cardBackgroundColor="@color/bg_card"
                 android:clickable="true"
                 android:focusable="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <!-- Icon Users -->
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_person"
-                            app:tint="@color/orange_primary"/>
-                        <!-- Badge trend -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:background="#224CAF50"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="2dp"
-                            android:text="+12%"
-                            android:textColor="@color/success"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Tổng người dùng"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/poppins_medium"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="14,289"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_person" app:tint="@color/orange_primary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Thành viên" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="bottom">
+                        <TextView android:id="@+id/tvStatUsersCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
+                        <TextView android:id="@+id/tvStatUsersTrend" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:layout_marginBottom="2dp" android:text="" android:textSize="10sp" android:paddingHorizontal="4dp" android:paddingVertical="1dp"/>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 2: Tổng công thức -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardStatRecipes"
                 android:layout_width="0dp"
@@ -192,64 +137,19 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#251A17"
                 app:cardBackgroundColor="@color/bg_card"
                 android:clickable="true"
                 android:focusable="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <!-- Icon Book/Food -->
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_food_category"
-                            app:tint="@color/orange_primary"/>
-                        <!-- Badge trend -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:background="#224CAF50"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="2dp"
-                            android:text="+5%"
-                            android:textColor="@color/success"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Tổng công thức"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/poppins_medium"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="3,450"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_food_category" app:tint="@color/orange_primary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Công thức" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="bottom">
+                        <TextView android:id="@+id/tvStatRecipesCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
+                        <TextView android:id="@+id/tvStatRecipesTrend" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:layout_marginBottom="2dp" android:text="" android:textSize="10sp" android:paddingHorizontal="4dp" android:paddingVertical="1dp"/>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 3: Báo cáo vi phạm -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardStatReports"
                 android:layout_width="0dp"
@@ -258,64 +158,16 @@
                 android:layout_marginEnd="6dp"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#251A17"
                 app:cardBackgroundColor="@color/bg_card"
                 android:clickable="true"
                 android:focusable="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <!-- Icon Warning/Notification -->
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_notification"
-                            app:tint="@color/error"/>
-                        <!-- Badge trend -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:background="#22F44336"
-                            android:paddingHorizontal="6dp"
-                            android:paddingVertical="2dp"
-                            android:text="Cần xử lý"
-                            android:textColor="@color/error"
-                            android:textSize="10sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Báo cáo vi phạm"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/poppins_medium"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="24"
-                        android:textColor="@color/error"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_flag" app:tint="#F44336"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Báo cáo" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <TextView android:id="@+id/tvStatReportsCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card 4: Bài viết blog -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardStatBlogs"
                 android:layout_width="0dp"
@@ -324,256 +176,39 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginBottom="12dp"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="#251A17"
                 app:cardBackgroundColor="@color/bg_card"
                 android:clickable="true"
                 android:focusable="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="14dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <!-- Icon Blog/Pencil -->
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_pencil"
-                            app:tint="@color/orange_primary"/>
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Bài viết blog"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"
-                        android:fontFamily="@font/poppins_medium"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="156"
-                        android:textColor="@color/text_primary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="14dp">
+                    <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_pencil" app:tint="@color/orange_primary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:text="Bài viết" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    <TextView android:id="@+id/tvStatBlogsCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="..." android:textColor="@color/text_primary" android:textSize="18sp" android:fontFamily="@font/poppins_semibold"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </GridLayout>
 
-        <!-- Bar Chart Section -->
+        <!-- Chart -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp"
             app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#251A17"
             app:cardBackgroundColor="@color/bg_card">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Công thức mới trong 7 ngày"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins_semibold"/>
-
-                <!-- Custom Bar Chart Graphic Layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="bottom"
-                    android:orientation="horizontal"
-                    android:weightSum="7">
-
-                    <!-- T2 Bar -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="40dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="#5C3B30" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="T2"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <!-- T3 Bar -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="75dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="#5C3B30" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="T3"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <!-- T4 Bar -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="50dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="#5C3B30" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="T4"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <!-- T5 Bar (Highlighted Active Day) -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="110dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="2dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="@color/orange_primary" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="T5"
-                            android:textColor="@color/orange_primary"
-                            android:textStyle="bold"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <!-- T6 Bar -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="65dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="#5C3B30" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="T6"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <!-- T7 Bar -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="30dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="#5C3B30" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="T7"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                    <!-- CN Bar -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal|bottom"
-                        android:orientation="vertical">
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="12dp"
-                            android:layout_height="45dp"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="0dp"
-                            app:strokeWidth="0dp"
-                            app:cardBackgroundColor="#5C3B30" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="6dp"
-                            android:text="CN"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hoạt động trong tuần" android:textColor="@color/text_primary" android:textSize="14sp" android:fontFamily="@font/poppins_semibold"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="100dp" android:layout_marginTop="12dp" android:gravity="bottom" android:orientation="horizontal" android:weightSum="7">
+                    <View android:id="@+id/barT2" android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT3" android:layout_width="0dp" android:layout_height="70dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT4" android:layout_width="0dp" android:layout_height="50dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT5" android:layout_width="0dp" android:layout_height="90dp" android:layout_weight="1" android:layout_margin="4dp" android:background="@color/orange_primary"/>
+                    <View android:id="@+id/barT6" android:layout_width="0dp" android:layout_height="60dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barT7" android:layout_width="0dp" android:layout_height="30dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
+                    <View android:id="@+id/barCN" android:layout_width="0dp" android:layout_height="45dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#3D2B27"/>
                 </LinearLayout>
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Recent Activity Panel -->
+        <!-- Recent Activities -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -582,141 +217,24 @@
             android:text="Hoạt động gần đây"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
-            android:textStyle="bold"
             android:fontFamily="@font/poppins_semibold"/>
 
-        <!-- Activity Timeline Container -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginHorizontal="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#251A17"
+            app:cardCornerRadius="20dp"
             app:cardBackgroundColor="@color/bg_card">
-
             <LinearLayout
+                android:id="@+id/layoutRecentActivitiesList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="14dp">
-
-                <!-- Activity 1 -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/timelineDot1"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_centerVertical="true"
-                        app:cardCornerRadius="4dp"
-                        app:cardElevation="0dp"
-                        app:strokeWidth="0dp"
-                        app:cardBackgroundColor="@color/error" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/timelineDot1"
-                        android:layout_marginStart="12dp"
-                        android:text="Báo cáo bình luận tiêu cực"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="10 phút trước"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"/>
-                </RelativeLayout>
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="#221A16"/>
-
-                <!-- Activity 2 -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/timelineDot2"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_centerVertical="true"
-                        app:cardCornerRadius="4dp"
-                        app:cardElevation="0dp"
-                        app:strokeWidth="0dp"
-                        app:cardBackgroundColor="@color/success" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/timelineDot2"
-                        android:layout_marginStart="12dp"
-                        android:text="User mới: @minh_tran"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="1 giờ trước"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"/>
-                </RelativeLayout>
-
-                <!-- Divider -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="10dp"
-                    android:background="#221A16"/>
-
-                <!-- Activity 3 -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/timelineDot3"
-                        android:layout_width="8dp"
-                        android:layout_height="8dp"
-                        android:layout_centerVertical="true"
-                        app:cardCornerRadius="4dp"
-                        app:cardElevation="0dp"
-                        app:strokeWidth="0dp"
-                        app:cardBackgroundColor="@color/orange_primary" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/timelineDot3"
-                        android:layout_marginStart="12dp"
-                        android:text="Công thức mới: Phở Bò Nam Định"
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:fontFamily="@font/poppins_semibold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="3 giờ trước"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp"/>
-                </RelativeLayout>
-
-            </LinearLayout>
+                android:padding="16dp"/>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Bottom Actions Row -->
+        <!-- Bottom Actions - Fixed text cutting by removing fixed height and adding padding -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -725,47 +243,50 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <!-- Xem báo cáo (Coral/Error color theme) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdminViewReports"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginEnd="6dp"
+                android:minHeight="54dp"
                 android:text="Xem báo cáo 📋"
                 android:textColor="@color/text_primary"
                 android:backgroundTint="#8C251C"
                 app:cornerRadius="12dp"
                 android:textSize="12sp"
+                android:paddingVertical="12dp"
                 android:fontFamily="@font/poppins_semibold"/>
 
-            <!-- Quản lý user (Grey/Dark elevated theme) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAdminManageUsers"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
+                android:minHeight="54dp"
                 android:text="Quản lý user 👥"
                 android:textColor="@color/text_primary"
                 android:backgroundTint="@color/bg_elevated"
                 app:cornerRadius="12dp"
                 android:textSize="12sp"
+                android:paddingVertical="12dp"
                 android:fontFamily="@font/poppins_semibold"/>
         </LinearLayout>
 
-        <!-- Đăng blog (Orange primary, full width below) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAdminPublishBlog"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginHorizontal="16dp"
+            android:minHeight="54dp"
             android:text="Đăng bài viết Blog mới ✍"
             android:textColor="@color/text_primary"
             android:backgroundTint="@color/orange_primary"
             app:cornerRadius="12dp"
-            android:textSize="13sp"
+            android:textSize="14sp"
+            android:paddingVertical="12dp"
             android:fontFamily="@font/poppins_semibold"/>
 
     </LinearLayout>

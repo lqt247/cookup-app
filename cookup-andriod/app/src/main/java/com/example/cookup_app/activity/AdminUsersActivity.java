@@ -185,7 +185,13 @@ public class AdminUsersActivity extends AppCompatActivity {
             if (userData == null) return;
 
             String userId = doc.getId();
-            String username = (String) userData.get("username");
+            String username = (String) userData.get("name");
+            if (TextUtils.isEmpty(username)) {
+                username = (String) userData.get("displayName");
+            }
+            if (TextUtils.isEmpty(username)) {
+                username = (String) userData.get("username");
+            }
             String email = (String) userData.get("email");
             String role = (String) userData.get("role");
             String avatarUrl = (String) userData.get("avatarUrl");
@@ -224,16 +230,23 @@ public class AdminUsersActivity extends AppCompatActivity {
 
             // Safe toggle check: Cannot toggle own role, and cannot change sole admin's role
             boolean isTargetSoleAdmin = email != null && "lequangtruong2472005@gmail.com".equalsIgnoreCase(email.trim());
-            if (userId.equals(currentUserId) || isTargetSoleAdmin || !isAdmin) {
+            if (userId.equals(currentUserId) || isTargetSoleAdmin) {
                 holder.btnToggleRole.setVisibility(View.GONE);
             } else {
                 holder.btnToggleRole.setVisibility(View.VISIBLE);
+                final String finalUsername = username;
                 holder.btnToggleRole.setOnClickListener(v -> {
+                    String title = isAdmin ? "Hạ cấp thành viên" : "Thăng chức thành viên";
+                    String message = isAdmin 
+                            ? "Bạn có chắc muốn hạ cấp thành viên \"" + (finalUsername != null ? finalUsername : email) + "\" xuống User không?"
+                            : "Bạn có chắc muốn thăng chức thành viên \"" + (finalUsername != null ? finalUsername : email) + "\" lên Admin không?";
+                    String targetRole = isAdmin ? "user" : "admin";
+
                     new AlertDialog.Builder(AdminUsersActivity.this, R.style.BottomSheetTheme)
-                            .setTitle("Xác nhận thay đổi vai trò")
-                            .setMessage("Bạn có chắc muốn hạ cấp thành viên \"" + (username != null ? username : email) + "\" xuống User không?")
+                            .setTitle(title)
+                            .setMessage(message)
                             .setPositiveButton("Xác nhận", (dialog, which) -> {
-                                updateRole(userId, "user");
+                                updateRole(userId, targetRole);
                             })
                             .setNegativeButton("Hủy", null)
                             .show();
